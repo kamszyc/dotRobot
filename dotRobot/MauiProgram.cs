@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Logging;
+﻿using CommunityToolkit.Maui;
+using Microsoft.Extensions.Logging;
 using Plugin.Maui.KeyListener;
 
 namespace dotRobot
@@ -10,6 +11,7 @@ namespace dotRobot
             var builder = MauiApp.CreateBuilder();
             builder
                 .UseMauiApp<App>()
+			    .UseMauiCommunityToolkit()
                 .UseKeyListener()
                 .ConfigureFonts(fonts =>
                 {
