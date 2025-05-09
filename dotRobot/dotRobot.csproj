@@ -46,7 +46,21 @@
 		<MauiAsset Include="Resources\Raw\**" LogicalName="%(RecursiveDir)%(Filename)%(Extension)" />
 	</ItemGroup>
 
+	<!-- Android -->
+	<ItemGroup Condition="$(TargetFramework.StartsWith('net9.0-android')) != true">
+		<Compile Remove="**\*.Android.cs" />
+		<None Include="**\*.Android.cs" Exclude="$(DefaultItemExcludes);$(DefaultExcludesInProjectFolder)" />
+	</ItemGroup>
+
+	<!-- Windows -->
+	<ItemGroup Condition="$(TargetFramework.Contains('-windows')) != true">
+		<Compile Remove="**\*.Windows.cs" />
+		<None Include="**\*.Windows.cs" Exclude="$(DefaultItemExcludes);$(DefaultExcludesInProjectFolder)" />
+	</ItemGroup>
+
+
 	<ItemGroup>
+		<PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.0" />
 		<PackageReference Include="Microsoft.Maui.Controls" Version="$(MauiVersion)" />
 		<PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="9.0.0" />
 		<PackageReference Include="Plugin.Maui.KeyListener" Version="1.0.0-preview1" />
@@ -54,6 +68,10 @@
 
 	<ItemGroup>
 	  <Folder Include="Resources\Images\" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <None Include="Style\WindowStyler.Windows.cs" />
 	</ItemGroup>
 
 	<ItemGroup>

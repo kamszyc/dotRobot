@@ -4,9 +4,5 @@
              x:Class="dotRobot.MainWindow"
              Title="dotRobot"
              Width="400"
-             Height="400"
-             MinimumWidth="400"
-             MinimumHeight="400"
-             MaximumWidth="400"
-             MaximumHeight="400">
+             Height="400">
 </Window>
