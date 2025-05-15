@@ -1,47 +1,38 @@
 ﻿using Plugin.Maui.KeyListener;
 using Microsoft.Maui.Dispatching;
 using System.Diagnostics;
-
-#if WINDOWS
-using XInputium.XInput;
-#endif
+using dotRobot.Gamepad;
 
 namespace dotRobot
 {
     public partial class MainPage : ContentPage
     {
-        private KeyboardBehavior keyboardBehavior = new();
-        private IDispatcherTimer timer;
-#if WINDOWS
-        private readonly XGamepad gamepad;
-#endif
+        private KeyboardBehavior keyboardBehavior = new KeyboardBehavior();
+        private GamepadService gamepadService = new GamepadService();
 
         public MainPage()
         {
             InitializeComponent();
-            timer = Dispatcher.CreateTimer();
-            AddBehavior();
-#if WINDOWS
-            XGamepad gamepad = new();
-            gamepad.ButtonPressed += (s, e) => Debug.WriteLine($"Button {e.Button} pressed");
-
-            timer.Interval = TimeSpan.FromMilliseconds(16.666); // ~60Hz polling rate
-            timer.Tick += (s, e) =>
-            {
-                gamepad.Update();
-            };
-            timer.Start();
-#endif
         }
         protected override void OnAppearing()
         {
             base.OnAppearing();
-            timer.Start();
+            AddBehavior();
+            gamepadService.Start(this.Dispatcher);
+            gamepadService.ButtonStateChanged += GamepadService_ButtonStateChanged;
+            gamepadService.LeftJoystickMoved += GamepadService_LeftJoystickMoved;
+        }
+
+        private void GamepadService_LeftJoystickMoved(object? sender, GamepadJoystickEventArgs e)
+        {
+        }
+
+        private void GamepadService_ButtonStateChanged(object? sender, GamepadButtonEventArgs e)
+        {
         }
 
         protected override void OnDisappearing()
         {
-            timer.Stop();
             base.OnDisappearing();
         }
 
