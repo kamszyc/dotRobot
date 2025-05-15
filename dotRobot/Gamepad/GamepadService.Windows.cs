@@ -31,7 +31,7 @@ namespace dotRobot.Gamepad
                 LeftJoystickMoved?.Invoke(this, new GamepadJoystickEventArgs
                 {
                     X = gamepad.LeftJoystick.X,
-                    Y = gamepad.RightJoystick.Y,
+                    Y = gamepad.LeftJoystick.Y,
                 });
             };
 
