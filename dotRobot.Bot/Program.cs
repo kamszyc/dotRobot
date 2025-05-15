@@ -12,9 +12,9 @@ namespace dotRobot
         public static void Main()
         {
             BluetoothLEServer server = BluetoothLEServer.Instance;
-            server.DeviceName = "dotRobot";
+            server.DeviceName = Constants.BluetoothDeviceName;
 
-            GattServiceProviderResult result = GattServiceProvider.Create(Guids.ServiceGuid);
+            GattServiceProviderResult result = GattServiceProvider.Create(Constants.ServiceGuid);
             if (result.Error != BluetoothError.Success)
             {
                 return;
@@ -23,7 +23,7 @@ namespace dotRobot
             GattServiceProvider serviceProvider = result.ServiceProvider;
             GattLocalService service = serviceProvider.Service;
 
-            var characteristicResult = service.CreateCharacteristic(Guids.RobotControlCharactericticGuid,
+            var characteristicResult = service.CreateCharacteristic(Constants.RobotControlCharactericticGuid,
                 new GattLocalCharacteristicParameters()
                 {
                     CharacteristicProperties = GattCharacteristicProperties.Write,
