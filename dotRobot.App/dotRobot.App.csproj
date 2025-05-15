@@ -15,7 +15,7 @@
 		<ApplicationTitle>dotRobot</ApplicationTitle>
 
 		<!-- App Identifier -->
-		<ApplicationId>com.companyname.dotrobot</ApplicationId>
+		<ApplicationId>dev.szyc.dotrobot</ApplicationId>
 
 		<!-- Versions -->
 		<ApplicationDisplayVersion>1.0</ApplicationDisplayVersion>
