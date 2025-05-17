@@ -38,12 +38,7 @@ namespace dotRobot
             var robotControlCharacteristic = characteristicResult.Characteristic;
             robotControlCharacteristic.WriteRequested += RobotControlCharacteristic_WriteRequested;
 
-
-            serviceProvider.StartAdvertising(new GattServiceProviderAdvertisingParameters()
-            {
-                IsConnectable = true,
-                IsDiscoverable = true
-            });
+            serviceProvider.StartAdvertising();
 
             Thread.Sleep(Timeout.Infinite);
         }
