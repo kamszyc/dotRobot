@@ -4,19 +4,8 @@
              xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
              x:Class="dotRobot.MainPage"
              Title="dotRobot">
-    
-    <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*" />
-            <ColumnDefinition Width="*" />
-            <ColumnDefinition Width="*" />
-        </Grid.ColumnDefinitions>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="*" />
-            <RowDefinition Height="*" />
-            <RowDefinition Height="*" />
-        </Grid.RowDefinitions>
 
+    <Grid RowDefinitions="{OnPlatform Android='*,*,*,2*', WinUI='*,*,*'}" ColumnDefinitions="*,*,*">
         <Label
             Text="Connected"
             Grid.Row="0"
@@ -49,45 +38,49 @@
             x:Name="ArrowLeft"
             Grid.Row="2"
             Grid.Column="0"
+            Margin="20"
             Text="◀"
             BackgroundColor="{StaticResource Primary}"
             TextColor="{StaticResource White}"
             FontSize="20"
-            HorizontalOptions="Center"
-            VerticalOptions="Center" />
+            HorizontalOptions="FillAndExpand"
+            VerticalOptions="FillAndExpand" />
 
         <Button
             x:Name="ArrowRight"
             Grid.Row="2"
             Grid.Column="2"
+            Margin="20"
             Text="▶"
             BackgroundColor="{StaticResource Primary}"
             TextColor="{StaticResource White}"
             FontSize="20"
-            HorizontalOptions="Center"
-            VerticalOptions="Center" />
+            HorizontalOptions="FillAndExpand"
+            VerticalOptions="FillAndExpand" />
 
         <Button
             x:Name="ArrowUp"
             Grid.Row="1"
             Grid.Column="1"
+            Margin="20"
             Text="▲"
             BackgroundColor="{StaticResource Primary}"
             TextColor="{StaticResource White}"
             FontSize="20"
-            HorizontalOptions="Center"
-            VerticalOptions="Center" />
+            HorizontalOptions="FillAndExpand"
+            VerticalOptions="FillAndExpand" />
 
         <Button
             x:Name="ArrowDown"
             Grid.Row="2"
             Grid.Column="1"
+            Margin="20"
             Text="▼"
             BackgroundColor="{StaticResource Primary}"
             TextColor="{StaticResource White}"
             FontSize="20"
-            HorizontalOptions="Center"
-            VerticalOptions="Center" />
+            HorizontalOptions="FillAndExpand"
+            VerticalOptions="FillAndExpand" />
     </Grid>
 
 </ContentPage>
