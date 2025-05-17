@@ -13,10 +13,12 @@ namespace dotRobot.Bluetooth
     public class BluetoothService
     {
         private BluetoothDevice? btDevice;
-        private GattService service;
-        private GattCharacteristic characteristic;
+        private GattService? service;
+        private GattCharacteristic? characteristic;
 
         public bool IsConnected => btDevice?.Gatt.IsConnected ?? false;
+
+        public event EventHandler? Disconnected;
 
         public async Task Connect()
         {
@@ -51,6 +53,15 @@ namespace dotRobot.Bluetooth
                 throw new InvalidOperationException($"Failed to connect to {btDevice.Name}.");
             }
             Debug.WriteLine($"Connected to {btDevice.Name}.");
+
+            btDevice.GattServerDisconnected += (s, e) =>
+            {
+                Debug.WriteLine($"Disconnected from {btDevice.Name}.");
+                btDevice = null;
+                service = null;
+                characteristic = null;
+                Disconnected?.Invoke(this, EventArgs.Empty);
+            };
 
             service = await btDevice.Gatt.GetPrimaryServiceAsync(Constants.ServiceGuid);
             if (service == null)

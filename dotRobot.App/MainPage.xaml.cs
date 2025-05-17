@@ -33,6 +33,13 @@ namespace dotRobot
             ArrowRight.Clicked += ArrowClicked;
             ArrowUp.Clicked += ArrowClicked;
             ArrowDown.Clicked += ArrowClicked;
+            bluetoothService.Disconnected += BluetoothService_Disconnected;
+        }
+
+        private void BluetoothService_Disconnected(object? sender, EventArgs e)
+        {
+            ViewModel.IsConnected = false;
+            ViewModel.CanConnect = true;
         }
 
         private async void ArrowClicked(object? sender, EventArgs e)
