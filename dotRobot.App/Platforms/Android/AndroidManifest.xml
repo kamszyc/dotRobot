@@ -3,4 +3,22 @@
 	<application android:allowBackup="true" android:icon="@mipmap/appicon" android:roundIcon="@mipmap/appicon_round" android:supportsRtl="true"></application>
 	<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 	<uses-permission android:name="android.permission.INTERNET" />
+	<!-- Request legacy Bluetooth permissions on older devices. -->
+	<uses-permission android:name="android.permission.BLUETOOTH"
+                     android:maxSdkVersion="30" />
+	<uses-permission android:name="android.permission.BLUETOOTH_ADMIN"
+                     android:maxSdkVersion="30" />
+
+	<!-- Needed only if your app looks for Bluetooth devices.
+         If your app doesn't use Bluetooth scan results to derive physical
+         location information, you can strongly assert that your app
+         doesn't derive physical location. -->
+	<uses-permission android:name="android.permission.BLUETOOTH_SCAN" android:usesPermissionFlags="neverForLocation" />
+
+	<!-- Needed only if your app communicates with already-paired Bluetooth
+         devices. -->
+	<uses-permission android:name="android.permission.BLUETOOTH_CONNECT" />
+
+	<!-- Needed only on SDK 31 and above if your app uses Bluetooth scan results to derive physical location. -->
+	<uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 </manifest>
