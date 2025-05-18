@@ -46,19 +46,19 @@ namespace dotRobot
         {
             if (sender == ArrowRight)
             {
-                await bluetoothService.SendCommand("RIGHT");
+                await bluetoothService.SendCommand(Commands.TurnRight);
             }
             else if (sender == ArrowLeft)
             {
-                await bluetoothService.SendCommand("LEFT ");
+                await bluetoothService.SendCommand(Commands.TurnLeft);
             }
             else if (sender == ArrowUp)
             {
-                await bluetoothService.SendCommand("UP   ");
+                await bluetoothService.SendCommand(Commands.Forward);
             }
             else if (sender == ArrowDown)
             {
-                await bluetoothService.SendCommand("DOWN ");
+                await bluetoothService.SendCommand(Commands.Backward);
             }
         }
 
