@@ -9,5 +9,6 @@ namespace dotRobot.Common
         public const string Backward = "BACK";
         public const string TurnLeft = "LEFT";
         public const string TurnRight = "RIGH";
+        public const string Stop = "STOP";
     }
 }

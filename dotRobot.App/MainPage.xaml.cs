@@ -29,10 +29,17 @@ namespace dotRobot
             gamepadService.ButtonStateChanged += GamepadService_ButtonStateChanged;
             gamepadService.LeftJoystickMoved += GamepadService_LeftJoystickMoved;
             ConnectToRobot.Clicked += ConnectToRobot_Clicked;
-            ArrowLeft.Clicked += ArrowClicked;
-            ArrowRight.Clicked += ArrowClicked;
-            ArrowUp.Clicked += ArrowClicked;
-            ArrowDown.Clicked += ArrowClicked;
+
+            ArrowLeft.Pressed += ArrowPressed;
+            ArrowRight.Pressed += ArrowPressed;
+            ArrowUp.Pressed += ArrowPressed;
+            ArrowDown.Pressed += ArrowPressed;
+
+            ArrowLeft.Released += ArrowReleased;
+            ArrowRight.Released += ArrowReleased;
+            ArrowUp.Released += ArrowReleased;
+            ArrowDown.Released += ArrowReleased;
+
             bluetoothService.Disconnected += BluetoothService_Disconnected;
         }
 
@@ -42,7 +49,7 @@ namespace dotRobot
             ViewModel.CanConnect = true;
         }
 
-        private async void ArrowClicked(object? sender, EventArgs e)
+        private async void ArrowPressed(object? sender, EventArgs e)
         {
             if (sender == ArrowRight)
             {
@@ -60,6 +67,11 @@ namespace dotRobot
             {
                 await bluetoothService.SendCommand(Commands.Backward);
             }
+        }
+
+        private async void ArrowReleased(object? sender, EventArgs e)
+        {
+            await bluetoothService.SendCommand(Commands.Stop);
         }
 
         private async void ConnectToRobot_Clicked(object? sender, EventArgs e)
