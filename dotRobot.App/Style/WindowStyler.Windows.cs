@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using WinUIEx;
 
 namespace dotRobot.Style
 {
@@ -15,9 +16,8 @@ namespace dotRobot.Style
             if (platformView == null)
                 return;
 
-            var appWindowPresenter = platformView.AppWindow.Presenter as OverlappedPresenter;
-            appWindowPresenter.IsResizable = false;
-            appWindowPresenter.IsMaximizable = false;
+            platformView.SetIsMaximizable(false);
+            platformView.SetIsResizable(false);
         }
     }
 }

@@ -92,6 +92,9 @@
 	</ItemGroup>
 
 	<ItemGroup Condition="'$(TargetFramework)' == 'net9.0-windows10.0.19041.0'">
+	  <PackageReference Include="WinUIEx">
+	    <Version>2.5.1</Version>
+	  </PackageReference>
 	  <PackageReference Include="XInputium">
 	    <Version>1.2.0</Version>
 	  </PackageReference>
