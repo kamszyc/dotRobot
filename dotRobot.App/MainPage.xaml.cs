@@ -21,6 +21,7 @@ namespace dotRobot
         {
             InitializeComponent();
             BindingContext = new MainPageViewModel();
+            Application.Current.UserAppTheme = AppTheme.Dark;
         }
         protected override void OnAppearing()
         {

@@ -2,8 +2,11 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             xmlns:local="clr-namespace:dotRobot.Controls"
+             xmlns:droid="clr-namespace:CommunityToolkit.Maui.PlatformConfiguration.AndroidSpecific;assembly=CommunityToolkit.Maui"
              x:Class="dotRobot.MainPage"
-             Title="dotRobot">
+             Title="dotRobot"
+             droid:NavigationBar.Style="DarkContent">
 
     <Grid RowDefinitions="{OnPlatform Android='*,*,*,2*', WinUI='*,*,*'}" ColumnDefinitions="*,*,*">
         <Label
@@ -27,9 +30,16 @@
             Grid.Row="0"
             Grid.Column="1"
             Text="Connect"
-            IsVisible="{Binding CanConnect}" 
-            BackgroundColor="{StaticResource Primary}"
-            TextColor="{StaticResource White}"
+            IsVisible="{Binding CanConnect}"
+            FontSize="20"
+            HorizontalOptions="Center"
+            VerticalOptions="Center" />
+        
+        <local:CheckboxButton
+            x:Name="LightsButton"
+            Grid.Row="0"
+            Grid.Column="2"
+            Text="Lights"
             FontSize="20"
             HorizontalOptions="Center"
             VerticalOptions="Center" />
@@ -40,8 +50,6 @@
             Grid.Column="0"
             Margin="20"
             Text="◀"
-            BackgroundColor="{StaticResource Primary}"
-            TextColor="{StaticResource White}"
             FontSize="20"
             HorizontalOptions="FillAndExpand"
             VerticalOptions="FillAndExpand" />
@@ -52,8 +60,6 @@
             Grid.Column="2"
             Margin="20"
             Text="▶"
-            BackgroundColor="{StaticResource Primary}"
-            TextColor="{StaticResource White}"
             FontSize="20"
             HorizontalOptions="FillAndExpand"
             VerticalOptions="FillAndExpand" />
@@ -64,8 +70,6 @@
             Grid.Column="1"
             Margin="20"
             Text="▲"
-            BackgroundColor="{StaticResource Primary}"
-            TextColor="{StaticResource White}"
             FontSize="20"
             HorizontalOptions="FillAndExpand"
             VerticalOptions="FillAndExpand" />
@@ -76,8 +80,6 @@
             Grid.Column="1"
             Margin="20"
             Text="▼"
-            BackgroundColor="{StaticResource Primary}"
-            TextColor="{StaticResource White}"
             FontSize="20"
             HorizontalOptions="FillAndExpand"
             VerticalOptions="FillAndExpand" />
