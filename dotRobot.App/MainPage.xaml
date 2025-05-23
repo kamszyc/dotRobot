@@ -19,7 +19,7 @@
 
         <Label
             Text="Connecting..."
-            Grid.Row="0"
+            Grid.Row="1"
             Grid.Column="1"
             IsVisible="{Binding IsConnecting}" 
             HorizontalOptions="Center" 
@@ -27,7 +27,7 @@
 
         <Button
             x:Name="ConnectToRobot"
-            Grid.Row="0"
+            Grid.Row="1"
             Grid.Column="1"
             Text="Connect"
             IsVisible="{Binding CanConnect}"
@@ -39,6 +39,7 @@
             x:Name="LightsButton"
             Grid.Row="0"
             Grid.Column="2"
+            IsVisible="{Binding IsConnected}" 
             Text="Lights"
             FontSize="20"
             HorizontalOptions="Center"
@@ -48,6 +49,7 @@
             x:Name="ArrowLeft"
             Grid.Row="2"
             Grid.Column="0"
+            IsVisible="{Binding IsConnected}" 
             Margin="20"
             Text="◀"
             FontSize="20"
@@ -58,6 +60,7 @@
             x:Name="ArrowRight"
             Grid.Row="2"
             Grid.Column="2"
+            IsVisible="{Binding IsConnected}" 
             Margin="20"
             Text="▶"
             FontSize="20"
@@ -68,6 +71,7 @@
             x:Name="ArrowUp"
             Grid.Row="1"
             Grid.Column="1"
+            IsVisible="{Binding IsConnected}" 
             Margin="20"
             Text="▲"
             FontSize="20"
@@ -78,6 +82,7 @@
             x:Name="ArrowDown"
             Grid.Row="2"
             Grid.Column="1"
+            IsVisible="{Binding IsConnected}" 
             Margin="20"
             Text="▼"
             FontSize="20"
