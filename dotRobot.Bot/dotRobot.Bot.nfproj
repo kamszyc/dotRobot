@@ -24,6 +24,7 @@
   <ItemGroup>
     <Compile Include="Bluetooth\RobotControlBluetoothService.cs" />
     <Compile Include="Bluetooth\RobotControlCommandEventArgs.cs" />
+    <Compile Include="Lights\LightsController.cs" />
     <Compile Include="Motor\MotorController.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

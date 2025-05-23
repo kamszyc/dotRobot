@@ -10,5 +10,7 @@ namespace dotRobot.Common
         public const string TurnLeft = "LEFT";
         public const string TurnRight = "RIGH";
         public const string Stop = "STOP";
+        public const string LightsOn = "LION";
+        public const string LightsOff = "LOFF";
     }
 }

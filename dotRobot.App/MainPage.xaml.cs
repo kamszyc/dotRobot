@@ -41,6 +41,8 @@ namespace dotRobot
             ArrowUp.Released += ArrowReleased;
             ArrowDown.Released += ArrowReleased;
 
+            LightsButton.CheckedChanged += LightsButton_CheckedChanged;
+
             bluetoothService.Disconnected += BluetoothService_Disconnected;
         }
 
@@ -73,6 +75,18 @@ namespace dotRobot
         private async void ArrowReleased(object? sender, EventArgs e)
         {
             await bluetoothService.SendCommand(Commands.Stop);
+        }
+
+        private async void LightsButton_CheckedChanged(object? sender, bool isChecked)
+        {
+            if (isChecked)
+            {
+                await bluetoothService.SendCommand(Commands.LightsOn);
+            }
+            else
+            {
+                await bluetoothService.SendCommand(Commands.LightsOff);
+            }
         }
 
         private async void ConnectToRobot_Clicked(object? sender, EventArgs e)

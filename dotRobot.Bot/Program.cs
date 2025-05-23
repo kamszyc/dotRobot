@@ -1,5 +1,6 @@
 using dotRobot.Bluetooth;
 using dotRobot.Common;
+using dotRobot.Lights;
 using dotRobot.Motor;
 using Iot.Device.DCMotor;
 using nanoFramework.Device.Bluetooth;
@@ -16,6 +17,7 @@ namespace dotRobot
     {
         private static RobotControlBluetoothService robotControlBluetoothService;
         private static MotorController motorController;
+        private static LightsController lightsController;
 
         public static void Main()
         {
@@ -24,6 +26,7 @@ namespace dotRobot
             robotControlBluetoothService.CommandReceived += RobotControlCommandReceived;
 
             motorController = new MotorController();
+            lightsController = new LightsController();
 
             Thread.Sleep(Timeout.Infinite);
         }
@@ -46,6 +49,12 @@ namespace dotRobot
                     break;
                 case Commands.Stop:
                     motorController.Stop();
+                    break;
+                case Commands.LightsOn:
+                    lightsController.TurnOnWhiteLed();
+                    break;
+                case Commands.LightsOff:
+                    lightsController.TurnOffWhiteLed();
                     break;
             }
         }
