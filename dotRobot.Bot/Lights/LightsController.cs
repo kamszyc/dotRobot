@@ -9,8 +9,8 @@ namespace dotRobot.Lights
         private GpioPin whiteLed;
         private GpioPin leftTurnYellowLed;
         private GpioPin rightTurnYellowLed;
-        private static bool leftTurn = false;
-        private static bool rightTurn = false;
+        private bool leftTurn = false;
+        private bool rightTurn = false;
         private bool leftTurnOn = false;
         private bool rightTurnOn = false;
 
