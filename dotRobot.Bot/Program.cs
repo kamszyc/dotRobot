@@ -18,6 +18,8 @@ namespace dotRobot
         private static RobotControlBluetoothService robotControlBluetoothService;
         private static MotorController motorController;
         private static LightsController lightsController;
+        private static bool leftTurn = false;
+        private static bool rightTurn = false;
 
         public static void Main()
         {
@@ -28,7 +30,27 @@ namespace dotRobot
             motorController = new MotorController();
             lightsController = new LightsController();
 
-            Thread.Sleep(Timeout.Infinite);
+            while (true)
+            {
+                if (leftTurn)
+                {
+                    lightsController.ToggleLeftTurn();
+                }
+                else
+                {
+                    lightsController.TurnOffLeftTurn();
+                }
+
+                if (rightTurn)
+                {
+                    lightsController.ToggleRightTurn();
+                }
+                else
+                {
+                    lightsController.TurnOffRightTurn();
+                }
+                Thread.Sleep(333);
+            }
         }
 
         private static void RobotControlCommandReceived(RobotControlBluetoothService sender, RobotControlCommandEventArgs eventArgs)
@@ -55,6 +77,18 @@ namespace dotRobot
                     break;
                 case Commands.LightsOff:
                     lightsController.TurnOffWhiteLed();
+                    break;
+                case Commands.LeftTurnOn:
+                    leftTurn = true;
+                    break;
+                case Commands.LeftTurnOff:
+                    leftTurn = false;
+                    break;
+                case Commands.RightTurnOn:
+                    rightTurn = true;
+                    break;
+                case Commands.RightTurnOff:
+                    rightTurn = false;
                     break;
             }
         }

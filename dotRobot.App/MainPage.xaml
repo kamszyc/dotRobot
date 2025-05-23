@@ -44,6 +44,26 @@
             FontSize="20"
             HorizontalOptions="Center"
             VerticalOptions="Center" />
+        
+        <local:CheckboxButton
+            x:Name="LeftTurnButton"
+            Grid.Row="1"
+            Grid.Column="0"
+            IsVisible="{Binding IsConnected}" 
+            Text="Turn left"
+            FontSize="20"
+            HorizontalOptions="Center"
+            VerticalOptions="Center" />
+        
+        <local:CheckboxButton
+            x:Name="RightTurnButton"
+            Grid.Row="1"
+            Grid.Column="2"
+            IsVisible="{Binding IsConnected}" 
+            Text="Turn right"
+            FontSize="20"
+            HorizontalOptions="Center"
+            VerticalOptions="Center" />
 
         <Button
             x:Name="ArrowLeft"
