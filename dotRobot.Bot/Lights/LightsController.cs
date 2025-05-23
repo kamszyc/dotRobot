@@ -9,6 +9,8 @@ namespace dotRobot.Lights
         private GpioPin whiteLed;
         private GpioPin leftTurnYellowLed;
         private GpioPin rightTurnYellowLed;
+        private static bool leftTurn = false;
+        private static bool rightTurn = false;
         private bool leftTurnOn = false;
         private bool rightTurnOn = false;
 
@@ -23,6 +25,47 @@ namespace dotRobot.Lights
             rightTurnYellowLed.Write(PinValue.Low);
         }
 
+        public void Tick()
+        {
+            if (leftTurn)
+            {
+                ToggleLeftTurn();
+            }
+            else
+            {
+                TurnOffLeftTurn();
+            }
+
+            if (rightTurn)
+            {
+                ToggleRightTurn();
+            }
+            else
+            {
+                TurnOffRightTurn();
+            }
+        }
+
+        public void EnableLeftTurn()
+        {
+            leftTurn = true;
+        }
+
+        public void DisableLeftTurn()
+        {
+            leftTurn = false;
+        }
+
+        public void EnableRightTurn()
+        {
+            rightTurn = true;
+        }
+
+        public void DisableRightTurn()
+        {
+            rightTurn = false;
+        }
+
         public void TurnOnWhiteLed()
         {
             whiteLed.Write(PinValue.High);
@@ -33,24 +76,24 @@ namespace dotRobot.Lights
             whiteLed.Write(PinValue.Low);
         }
 
-        public void ToggleLeftTurn()
+        private void ToggleLeftTurn()
         {
             leftTurnYellowLed.Write(leftTurnOn ? PinValue.Low : PinValue.High);
             leftTurnOn = !leftTurnOn;
         }
 
-        public void TurnOffLeftTurn()
-        {
-            leftTurnYellowLed.Write(PinValue.Low);
-        }
-
-        public void ToggleRightTurn()
+        private void ToggleRightTurn()
         {
             rightTurnYellowLed.Write(rightTurnOn ? PinValue.Low : PinValue.High);
             rightTurnOn = !rightTurnOn;
         }
 
-        public void TurnOffRightTurn()
+        private void TurnOffLeftTurn()
+        {
+            leftTurnYellowLed.Write(PinValue.Low);
+        }
+
+        private void TurnOffRightTurn()
         {
             rightTurnYellowLed.Write(PinValue.Low);
         }
