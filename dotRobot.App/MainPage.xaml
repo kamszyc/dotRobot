@@ -7,110 +7,120 @@
              x:Class="dotRobot.MainPage"
              Title="dotRobot"
              droid:NavigationBar.Style="DarkContent">
+    
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <toolkit:InvertedBoolConverter x:Key="InvertedBoolConverter" />
+        </ResourceDictionary>
+    </ContentPage.Resources>
 
-    <Grid RowDefinitions="{OnPlatform Android='*,*,*,*,2*', WinUI='*,*,*,*'}" ColumnDefinitions="*,*,*">
-        <Label
-            Text="Connected"
-            Grid.Row="0"
-            Grid.Column="1"
-            IsVisible="{Binding IsConnected}" 
-            HorizontalOptions="Center" 
-            VerticalOptions="Center" />
+    <Grid>
+        <Grid RowDefinitions="*" ColumnDefinitions="*" IsVisible="{Binding IsConnected, Converter={StaticResource InvertedBoolConverter}}">
+            <Label
+                Text="Connecting..."
+                Grid.Row="0"
+                Grid.Column="0"
+                IsVisible="{Binding IsConnecting}" 
+                HorizontalOptions="Center" 
+                VerticalOptions="Center" />
 
-        <Label
-            Text="Connecting..."
-            Grid.Row="1"
-            Grid.Column="1"
-            IsVisible="{Binding IsConnecting}" 
-            HorizontalOptions="Center" 
-            VerticalOptions="Center" />
+            <Button
+                x:Name="ConnectToRobot"
+                Grid.Row="0"
+                Grid.Column="0"
+                Text="Connect"
+                IsVisible="{Binding CanConnect}"
+                FontSize="20"
+                HorizontalOptions="Center"
+                VerticalOptions="Center" />
+        </Grid>
 
-        <Button
-            x:Name="ConnectToRobot"
-            Grid.Row="1"
-            Grid.Column="1"
-            Text="Connect"
-            IsVisible="{Binding CanConnect}"
-            FontSize="20"
-            HorizontalOptions="Center"
-            VerticalOptions="Center" />
-        
-        <local:CheckboxButton
-            x:Name="LightsButton"
-            Grid.Row="1"
-            Grid.Column="1"
-            IsVisible="{Binding IsConnected}" 
-            Margin="20"
-            Text="💡"
-            FontSize="30"
-            HorizontalOptions="FillAndExpand"
-            VerticalOptions="FillAndExpand" />
-        
-        <local:CheckboxButton
-            x:Name="LeftTurnButton"
-            Grid.Row="1"
-            Grid.Column="0"
-            IsVisible="{Binding IsConnected}" 
-            Margin="20"
-            Text="←"
-            FontSize="30"
-            HorizontalOptions="FillAndExpand"
-            VerticalOptions="FillAndExpand" />
-        
-        <local:CheckboxButton
-            x:Name="RightTurnButton"
-            Grid.Row="1"
-            Grid.Column="2"
-            IsVisible="{Binding IsConnected}" 
-            Margin="20"
-            Text="→"
-            FontSize="30"
-            HorizontalOptions="FillAndExpand"
-            VerticalOptions="FillAndExpand" />
+        <Grid RowDefinitions="{OnPlatform Android='*,*,*,*,2*', WinUI='*,*,*,*'}" ColumnDefinitions="*,*,*" IsVisible="{Binding IsConnected}">
+            <Label
+                Text="Connected"
+                Grid.Row="0"
+                Grid.Column="1"
+                IsVisible="{Binding IsConnected}" 
+                HorizontalOptions="Center" 
+                VerticalOptions="Center" />
 
-        <Button
-            x:Name="ArrowLeft"
-            Grid.Row="3"
-            Grid.Column="0"
-            IsVisible="{Binding IsConnected}" 
-            Margin="20"
-            Text="◀"
-            FontSize="30"
-            HorizontalOptions="FillAndExpand"
-            VerticalOptions="FillAndExpand" />
+            <local:CheckboxButton
+                x:Name="LightsButton"
+                Grid.Row="1"
+                Grid.Column="1"
+                IsVisible="{Binding IsConnected}" 
+                Margin="20"
+                Text="💡"
+                FontSize="30"
+                HorizontalOptions="FillAndExpand"
+                VerticalOptions="FillAndExpand" />
 
-        <Button
-            x:Name="ArrowRight"
-            Grid.Row="3"
-            Grid.Column="2"
-            IsVisible="{Binding IsConnected}" 
-            Margin="20"
-            Text="▶"
-            FontSize="30"
-            HorizontalOptions="FillAndExpand"
-            VerticalOptions="FillAndExpand" />
+            <local:CheckboxButton
+                x:Name="LeftTurnButton"
+                Grid.Row="1"
+                Grid.Column="0"
+                IsVisible="{Binding IsConnected}" 
+                Margin="20"
+                Text="←"
+                FontSize="30"
+                HorizontalOptions="FillAndExpand"
+                VerticalOptions="FillAndExpand" />
 
-        <Button
-            x:Name="ArrowUp"
-            Grid.Row="2"
-            Grid.Column="1"
-            IsVisible="{Binding IsConnected}" 
-            Margin="20"
-            Text="▲"
-            FontSize="30"
-            HorizontalOptions="FillAndExpand"
-            VerticalOptions="FillAndExpand" />
+            <local:CheckboxButton
+                x:Name="RightTurnButton"
+                Grid.Row="1"
+                Grid.Column="2"
+                IsVisible="{Binding IsConnected}" 
+                Margin="20"
+                Text="→"
+                FontSize="30"
+                HorizontalOptions="FillAndExpand"
+                VerticalOptions="FillAndExpand" />
 
-        <Button
-            x:Name="ArrowDown"
-            Grid.Row="3"
-            Grid.Column="1"
-            IsVisible="{Binding IsConnected}" 
-            Margin="20"
-            Text="▼"
-            FontSize="30"
-            HorizontalOptions="FillAndExpand"
-            VerticalOptions="FillAndExpand" />
+            <Button
+                x:Name="ArrowLeft"
+                Grid.Row="3"
+                Grid.Column="0"
+                IsVisible="{Binding IsConnected}" 
+                Margin="20"
+                Text="◀"
+                FontSize="30"
+                HorizontalOptions="FillAndExpand"
+                VerticalOptions="FillAndExpand" />
+
+            <Button
+                x:Name="ArrowRight"
+                Grid.Row="3"
+                Grid.Column="2"
+                IsVisible="{Binding IsConnected}" 
+                Margin="20"
+                Text="▶"
+                FontSize="30"
+                HorizontalOptions="FillAndExpand"
+                VerticalOptions="FillAndExpand" />
+
+            <Button
+                x:Name="ArrowUp"
+                Grid.Row="2"
+                Grid.Column="1"
+                IsVisible="{Binding IsConnected}" 
+                Margin="20"
+                Text="▲"
+                FontSize="30"
+                HorizontalOptions="FillAndExpand"
+                VerticalOptions="FillAndExpand" />
+
+            <Button
+                x:Name="ArrowDown"
+                Grid.Row="3"
+                Grid.Column="1"
+                IsVisible="{Binding IsConnected}" 
+                Margin="20"
+                Text="▼"
+                FontSize="30"
+                HorizontalOptions="FillAndExpand"
+                VerticalOptions="FillAndExpand" />
+        </Grid>
     </Grid>
 
 </ContentPage>
