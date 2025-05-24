@@ -13,12 +13,12 @@ namespace dotRobot
 {
     public partial class MainPageViewModel : ObservableObject
     {
-        public event EventHandler<string>? RequestAlert;
-
+        private readonly BluetoothService bluetoothService = new();
         private bool isConnected;
         private bool isConnecting;
         private bool canConnect;
-        private readonly BluetoothService bluetoothService = new();
+
+        public event EventHandler<string>? RequestAlert;
 
         public bool IsConnected
         {
@@ -72,94 +72,52 @@ namespace dotRobot
             }
         }
 
+        [RelayCommand]
+        private async Task ArrowUpPressed() => await SendCommand(Commands.Forward);
+
+        [RelayCommand]
+        private async Task ArrowUpReleased() => await SendCommand(Commands.Stop);
+
+        [RelayCommand]
+        private async Task ArrowDownPressed() => await SendCommand(Commands.Backward);
+
+        [RelayCommand]
+        private async Task ArrowDownReleased() => await SendCommand(Commands.Stop);
+
+        [RelayCommand]
+        private async Task ArrowLeftPressed() => await SendCommand(Commands.TurnLeft);
+
+        [RelayCommand]
+        private async Task ArrowLeftReleased() => await SendCommand(Commands.Stop);
+
+        [RelayCommand]
+        private async Task ArrowRightPressed() => await SendCommand(Commands.TurnRight);
+
+        [RelayCommand]
+        private async Task ArrowRightReleased() => await SendCommand(Commands.Stop);
+
+        [RelayCommand]
+        private async Task LightsButtonChecked() => await SendCommand(Commands.LightsOn);
+
+        [RelayCommand]
+        private async Task LightsButtonUnchecked() => await SendCommand(Commands.LightsOff);
+
+        [RelayCommand]
+        private async Task LeftTurnButtonChecked() => await SendCommand(Commands.LeftTurnOn);
+
+        [RelayCommand]
+        private async Task LeftTurnButtonUnchecked() => await SendCommand(Commands.LeftTurnOff);
+
+        [RelayCommand]
+        private async Task RightTurnButtonChecked() => await SendCommand(Commands.RightTurnOn);
+
+        [RelayCommand]
+        private async Task RightTurnButtonUnchecked() => await SendCommand(Commands.RightTurnOff);
+
         private void BluetoothService_Disconnected(object? sender, EventArgs e)
         {
             IsConnected = false;
             CanConnect = true;
-        }
-
-        [RelayCommand]
-        private async Task ArrowUpPressed()
-        {
-            await SendCommand(Commands.Forward);
-        }
-
-        [RelayCommand]
-        private async Task ArrowUpReleased()
-        {
-            await SendCommand(Commands.Stop);
-        }
-
-        [RelayCommand]
-        private async Task ArrowDownPressed()
-        {
-            await SendCommand(Commands.Backward);
-        }
-
-        [RelayCommand]
-        private async Task ArrowDownReleased()
-        {
-            await SendCommand(Commands.Stop);
-        }
-
-        [RelayCommand]
-        private async Task ArrowLeftPressed()
-        {
-            await SendCommand(Commands.TurnLeft);
-        }
-
-        [RelayCommand]
-        private async Task ArrowLeftReleased()
-        {
-            await SendCommand(Commands.Stop);
-        }
-
-        [RelayCommand]
-        private async Task ArrowRightPressed()
-        {
-            await SendCommand(Commands.TurnRight);
-        }
-
-        [RelayCommand]
-        private async Task ArrowRightReleased()
-        {
-            await SendCommand(Commands.Stop);
-        }
-
-        [RelayCommand]
-        private async Task LightsButtonChecked()
-        {
-            await SendCommand(Commands.LightsOn);
-        }
-
-        [RelayCommand]
-        private async Task LightsButtonUnchecked()
-        {
-            await SendCommand(Commands.LightsOff);
-        }
-
-        [RelayCommand]
-        private async Task LeftTurnButtonChecked()
-        {
-            await SendCommand(Commands.LeftTurnOn);
-        }
-
-        [RelayCommand]
-        private async Task LeftTurnButtonUnchecked()
-        {
-            await SendCommand(Commands.LeftTurnOff);
-        }
-
-        [RelayCommand]
-        private async Task RightTurnButtonChecked()
-        {
-            await SendCommand(Commands.RightTurnOn);
-        }
-
-        [RelayCommand]
-        private async Task RightTurnButtonUnchecked()
-        {
-            await SendCommand(Commands.RightTurnOff);
         }
 
         private Task SendCommand(string command)
