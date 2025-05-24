@@ -25,6 +25,14 @@ namespace dotRobot.Controls
             {
                 SetValue(IsCheckedProperty, value);
                 CheckedChanged?.Invoke(this, value);
+                if (value)
+                {
+                    Checked?.Invoke(this, EventArgs.Empty);
+                }
+                else
+                {
+                    Unchecked?.Invoke(this, EventArgs.Empty);
+                }
             }
         }
 
@@ -35,6 +43,8 @@ namespace dotRobot.Controls
             false);
 
         public event EventHandler<bool>? CheckedChanged;
+        public event EventHandler? Checked;
+        public event EventHandler? Unchecked;
 
         private void GoToState(bool isChecked)
         {

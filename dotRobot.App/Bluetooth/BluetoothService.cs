@@ -27,7 +27,7 @@ namespace dotRobot.Bluetooth
                 throw new InvalidOperationException("Bluetooth scan permission denied.");
             }
 
-            var btDevice = await ScanForDevice();
+            btDevice = await ScanForDevice();
             if (btDevice == null)
             {
                 throw new InvalidOperationException("No device found with the specified name.");

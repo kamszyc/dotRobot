@@ -2,11 +2,18 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
-             xmlns:local="clr-namespace:dotRobot.Controls"
+             xmlns:local="clr-namespace:dotRobot"
+             xmlns:localControls="clr-namespace:dotRobot.Controls"
              xmlns:droid="clr-namespace:CommunityToolkit.Maui.PlatformConfiguration.AndroidSpecific;assembly=CommunityToolkit.Maui"
              x:Class="dotRobot.MainPage"
              Title="dotRobot"
-             droid:NavigationBar.Style="DarkContent">
+             droid:NavigationBar.Style="DarkContent"
+             x:Name="this"
+             x:DataType="local:MainPageViewModel">
+    
+    <ContentPage.BindingContext>
+        <local:MainPageViewModel />
+    </ContentPage.BindingContext>
     
     <ContentPage.Resources>
         <ResourceDictionary>
@@ -32,7 +39,8 @@
                 IsVisible="{Binding CanConnect}"
                 FontSize="20"
                 HorizontalOptions="Center"
-                VerticalOptions="Center" />
+                VerticalOptions="Center"
+                Command="{Binding ConnectToRobotCommand}"/>
         </Grid>
 
         <Grid RowDefinitions="{OnPlatform Android='*,*,*,*,2*', WinUI='*,*,*,*'}" ColumnDefinitions="*,*,*" IsVisible="{Binding IsConnected}">
@@ -44,7 +52,7 @@
                 HorizontalOptions="Center" 
                 VerticalOptions="Center" />
 
-            <local:CheckboxButton
+            <localControls:CheckboxButton
                 x:Name="LightsButton"
                 Grid.Row="1"
                 Grid.Column="1"
@@ -53,9 +61,21 @@
                 Text="💡"
                 FontSize="30"
                 HorizontalOptions="FillAndExpand"
-                VerticalOptions="FillAndExpand" />
+                VerticalOptions="FillAndExpand">
+                <localControls:CheckboxButton.Behaviors>
+                    <toolkit:EventToCommandBehavior
+                        EventName="Checked"
+                        Command="{Binding LightsButtonCheckedCommand}"
+                        BindingContext="{Binding Source={x:Reference this}, Path=BindingContext}" />
 
-            <local:CheckboxButton
+                    <toolkit:EventToCommandBehavior
+                        EventName="Unchecked"
+                        Command="{Binding LightsButtonUncheckedCommand}" 
+                        BindingContext="{Binding Source={x:Reference this}, Path=BindingContext}" />
+                </localControls:CheckboxButton.Behaviors>
+            </localControls:CheckboxButton>
+
+            <localControls:CheckboxButton
                 x:Name="LeftTurnButton"
                 Grid.Row="1"
                 Grid.Column="0"
@@ -64,9 +84,21 @@
                 Text="←"
                 FontSize="30"
                 HorizontalOptions="FillAndExpand"
-                VerticalOptions="FillAndExpand" />
+                VerticalOptions="FillAndExpand">
+                <localControls:CheckboxButton.Behaviors>
+                    <toolkit:EventToCommandBehavior
+                        EventName="Checked"
+                        Command="{Binding LeftTurnButtonCheckedCommand}"
+                        BindingContext="{Binding Source={x:Reference this}, Path=BindingContext}"  />
 
-            <local:CheckboxButton
+                    <toolkit:EventToCommandBehavior
+                        EventName="Unchecked"
+                        Command="{Binding LeftTurnButtonUncheckedCommand}" 
+                        BindingContext="{Binding Source={x:Reference this}, Path=BindingContext}" />
+                </localControls:CheckboxButton.Behaviors>
+            </localControls:CheckboxButton>
+
+            <localControls:CheckboxButton
                 x:Name="RightTurnButton"
                 Grid.Row="1"
                 Grid.Column="2"
@@ -75,7 +107,19 @@
                 Text="→"
                 FontSize="30"
                 HorizontalOptions="FillAndExpand"
-                VerticalOptions="FillAndExpand" />
+                VerticalOptions="FillAndExpand">
+                <localControls:CheckboxButton.Behaviors>
+                    <toolkit:EventToCommandBehavior
+                        EventName="Checked"
+                        Command="{Binding RightTurnButtonCheckedCommand}" 
+                        BindingContext="{Binding Source={x:Reference this}, Path=BindingContext}" />
+
+                    <toolkit:EventToCommandBehavior
+                        EventName="Unchecked"
+                        Command="{Binding RightTurnButtonUncheckedCommand}"
+                        BindingContext="{Binding Source={x:Reference this}, Path=BindingContext}"  />
+                </localControls:CheckboxButton.Behaviors>
+            </localControls:CheckboxButton>
 
             <Button
                 x:Name="ArrowLeft"
@@ -86,7 +130,19 @@
                 Text="◀"
                 FontSize="30"
                 HorizontalOptions="FillAndExpand"
-                VerticalOptions="FillAndExpand" />
+                VerticalOptions="FillAndExpand">
+                <Button.Behaviors>
+                    <toolkit:EventToCommandBehavior
+                        EventName="Pressed"
+                        Command="{Binding ArrowLeftPressedCommand}" 
+                        BindingContext="{Binding Source={x:Reference this}, Path=BindingContext}" />
+
+                    <toolkit:EventToCommandBehavior
+                        EventName="Released"
+                        Command="{Binding ArrowLeftReleasedCommand}"
+                        BindingContext="{Binding Source={x:Reference this}, Path=BindingContext}"  />
+                </Button.Behaviors>
+            </Button>
 
             <Button
                 x:Name="ArrowRight"
@@ -97,7 +153,19 @@
                 Text="▶"
                 FontSize="30"
                 HorizontalOptions="FillAndExpand"
-                VerticalOptions="FillAndExpand" />
+                VerticalOptions="FillAndExpand">
+                <Button.Behaviors>
+                    <toolkit:EventToCommandBehavior
+                        EventName="Pressed"
+                        Command="{Binding ArrowRightPressedCommand}" 
+                        BindingContext="{Binding Source={x:Reference this}, Path=BindingContext}" />
+
+                    <toolkit:EventToCommandBehavior
+                        EventName="Released"
+                        Command="{Binding ArrowRightReleasedCommand}" 
+                        BindingContext="{Binding Source={x:Reference this}, Path=BindingContext}" />
+                </Button.Behaviors>
+            </Button>
 
             <Button
                 x:Name="ArrowUp"
@@ -108,7 +176,19 @@
                 Text="▲"
                 FontSize="30"
                 HorizontalOptions="FillAndExpand"
-                VerticalOptions="FillAndExpand" />
+                VerticalOptions="FillAndExpand">
+                <Button.Behaviors>
+                    <toolkit:EventToCommandBehavior
+                        EventName="Pressed"
+                        Command="{Binding ArrowUpPressedCommand}"
+                        BindingContext="{Binding Source={x:Reference this}, Path=BindingContext}"  />
+
+                    <toolkit:EventToCommandBehavior
+                        EventName="Released"
+                        Command="{Binding ArrowUpReleasedCommand}"
+                        BindingContext="{Binding Source={x:Reference this}, Path=BindingContext}"  />
+                </Button.Behaviors>
+            </Button>
 
             <Button
                 x:Name="ArrowDown"
@@ -119,7 +199,19 @@
                 Text="▼"
                 FontSize="30"
                 HorizontalOptions="FillAndExpand"
-                VerticalOptions="FillAndExpand" />
+                VerticalOptions="FillAndExpand">
+                <Button.Behaviors>
+                    <toolkit:EventToCommandBehavior
+                        EventName="Pressed"
+                        Command="{Binding ArrowDownPressedCommand}"
+                        BindingContext="{Binding Source={x:Reference this}, Path=BindingContext}"  />
+
+                    <toolkit:EventToCommandBehavior
+                        EventName="Released"
+                        Command="{Binding ArrowDownReleasedCommand}"
+                        BindingContext="{Binding Source={x:Reference this}, Path=BindingContext}"  />
+                </Button.Behaviors>
+            </Button>
         </Grid>
     </Grid>
 
