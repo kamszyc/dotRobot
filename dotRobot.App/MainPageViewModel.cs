@@ -81,85 +81,90 @@ namespace dotRobot
         [RelayCommand]
         private async Task ArrowUpPressed()
         {
-            await bluetoothService.SendCommand(Commands.Forward);
+            await SendCommand(Commands.Forward);
         }
 
         [RelayCommand]
         private async Task ArrowUpReleased()
         {
-            await bluetoothService.SendCommand(Commands.Stop);
+            await SendCommand(Commands.Stop);
         }
 
         [RelayCommand]
         private async Task ArrowDownPressed()
         {
-            await bluetoothService.SendCommand(Commands.Backward);
+            await SendCommand(Commands.Backward);
         }
 
         [RelayCommand]
         private async Task ArrowDownReleased()
         {
-            await bluetoothService.SendCommand(Commands.Stop);
+            await SendCommand(Commands.Stop);
         }
 
         [RelayCommand]
         private async Task ArrowLeftPressed()
         {
-            await bluetoothService.SendCommand(Commands.TurnLeft);
+            await SendCommand(Commands.TurnLeft);
         }
 
         [RelayCommand]
         private async Task ArrowLeftReleased()
         {
-            await bluetoothService.SendCommand(Commands.Stop);
+            await SendCommand(Commands.Stop);
         }
 
         [RelayCommand]
         private async Task ArrowRightPressed()
         {
-            await bluetoothService.SendCommand(Commands.TurnRight);
+            await SendCommand(Commands.TurnRight);
         }
 
         [RelayCommand]
         private async Task ArrowRightReleased()
         {
-            await bluetoothService.SendCommand(Commands.Stop);
+            await SendCommand(Commands.Stop);
         }
 
         [RelayCommand]
         private async Task LightsButtonChecked()
         {
-            await bluetoothService.SendCommand(Commands.LightsOn);
+            await SendCommand(Commands.LightsOn);
         }
 
         [RelayCommand]
         private async Task LightsButtonUnchecked()
         {
-            await bluetoothService.SendCommand(Commands.LightsOff);
+            await SendCommand(Commands.LightsOff);
         }
 
         [RelayCommand]
         private async Task LeftTurnButtonChecked()
         {
-            await bluetoothService.SendCommand(Commands.LeftTurnOn);
+            await SendCommand(Commands.LeftTurnOn);
         }
 
         [RelayCommand]
         private async Task LeftTurnButtonUnchecked()
         {
-            await bluetoothService.SendCommand(Commands.LeftTurnOff);
+            await SendCommand(Commands.LeftTurnOff);
         }
 
         [RelayCommand]
         private async Task RightTurnButtonChecked()
         {
-            await bluetoothService.SendCommand(Commands.RightTurnOn);
+            await SendCommand(Commands.RightTurnOn);
         }
 
         [RelayCommand]
         private async Task RightTurnButtonUnchecked()
         {
-            await bluetoothService.SendCommand(Commands.RightTurnOff);
+            await SendCommand(Commands.RightTurnOff);
+        }
+
+        private Task SendCommand(string command)
+        {
+            return bluetoothService.SendCommand(Commands.Forward);
         }
     }
 }
