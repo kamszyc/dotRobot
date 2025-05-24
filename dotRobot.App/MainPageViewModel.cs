@@ -164,7 +164,7 @@ namespace dotRobot
 
         private Task SendCommand(string command)
         {
-            return bluetoothService.SendCommand(Commands.Forward);
+            return bluetoothService.SendCommand(command);
         }
     }
 }
