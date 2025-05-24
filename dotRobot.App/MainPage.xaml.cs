@@ -12,10 +12,17 @@ namespace dotRobot
 {
     public partial class MainPage : ContentPage
     {
+        private MainPageViewModel ViewModel => (MainPageViewModel)BindingContext;
+
         public MainPage()
         {
             InitializeComponent();
             Application.Current.UserAppTheme = AppTheme.Dark;
+
+            ViewModel.RequestAlert += async (s, alert) =>
+            {
+                await DisplayAlert("Information", alert, "OK");
+            };
         }
     }
 

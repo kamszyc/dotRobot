@@ -13,10 +13,12 @@ namespace dotRobot
 {
     public partial class MainPageViewModel : ObservableObject
     {
+        public event EventHandler<string>? RequestAlert;
+
         private bool isConnected;
         private bool isConnecting;
         private bool canConnect;
-        private BluetoothService bluetoothService = new BluetoothService();
+        private readonly BluetoothService bluetoothService = new();
 
         public bool IsConnected
         {
@@ -64,7 +66,7 @@ namespace dotRobot
             }
             catch (InvalidOperationException ex)
             {
-                //await DisplayAlert("Alert", ex.Message, "OK");
+                RequestAlert?.Invoke(this, ex.Message);
                 IsConnecting = false;
                 CanConnect = true;
             }
