@@ -13,7 +13,6 @@ namespace dotRobot.Bluetooth
     public class BluetoothService
     {
         private BluetoothDevice? btDevice;
-        private GattService? service;
         private GattCharacteristic? characteristic;
 
         public bool IsConnected => btDevice?.Gatt.IsConnected ?? false;
@@ -25,23 +24,10 @@ namespace dotRobot.Bluetooth
             var permissionResult = await Permissions.RequestAsync<Permissions.Bluetooth>();
             if (permissionResult != PermissionStatus.Granted)
             {
-                Debug.WriteLine("Bluetooth scan permission denied.");
+                throw new InvalidOperationException("Bluetooth scan permission denied.");
             }
-            await ConnectInternal();
-        }
 
-        private async Task ConnectInternal()
-        {
-            var options = new RequestDeviceOptions();
-            var filter = new BluetoothLEScanFilter
-            {
-                Name = Constants.BluetoothDeviceName
-            };
-            filter.Services.Add(Constants.ServiceGuid);
-            options.Filters.Add(filter);
-
-            var discoveredDevices = await InTheHand.Bluetooth.Bluetooth.ScanForDevicesAsync(options);
-            btDevice = discoveredDevices.FirstOrDefault(x => x.Name == Constants.BluetoothDeviceName);
+            var btDevice = await ScanForDevice();
             if (btDevice == null)
             {
                 throw new InvalidOperationException("No device found with the specified name.");
@@ -54,16 +40,9 @@ namespace dotRobot.Bluetooth
             }
             Debug.WriteLine($"Connected to {btDevice.Name}.");
 
-            btDevice.GattServerDisconnected += (s, e) =>
-            {
-                Debug.WriteLine($"Disconnected from {btDevice.Name}.");
-                btDevice = null;
-                service = null;
-                characteristic = null;
-                Disconnected?.Invoke(this, EventArgs.Empty);
-            };
+            btDevice.GattServerDisconnected += OnGattServerDisconnected;
 
-            service = await btDevice.Gatt.GetPrimaryServiceAsync(Constants.ServiceGuid);
+            var service = await btDevice.Gatt.GetPrimaryServiceAsync(Constants.ServiceGuid);
             if (service == null)
             {
                 throw new InvalidOperationException("Service not found.");
@@ -87,6 +66,27 @@ namespace dotRobot.Bluetooth
             await characteristic.WriteValueWithoutResponseAsync(Encoding.UTF8.GetBytes(command));
 
             Debug.WriteLine($"Command sent: {command}");
+        }
+
+        private async Task<BluetoothDevice?> ScanForDevice()
+        {
+            var options = new RequestDeviceOptions();
+            var filter = new BluetoothLEScanFilter
+            {
+                Name = Constants.BluetoothDeviceName
+            };
+            filter.Services.Add(Constants.ServiceGuid);
+            options.Filters.Add(filter);
+
+            var discoveredDevices = await InTheHand.Bluetooth.Bluetooth.ScanForDevicesAsync(options);
+            return discoveredDevices.FirstOrDefault(x => x.Name == Constants.BluetoothDeviceName);
+        }
+
+        private void OnGattServerDisconnected(object? sender, EventArgs e)
+        {
+            Disconnected?.Invoke(this, EventArgs.Empty);
+            btDevice = null;
+            characteristic = null;
         }
     }
 }
