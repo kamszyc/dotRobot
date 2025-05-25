@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CommunityToolkit.Mvvm.Messaging;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -13,6 +14,10 @@ namespace dotRobot.Gamepad
 
         public void Start(IDispatcher dispatcher)
         {
+            WeakReferenceMessenger.Default.Register<GamepadButtonMessage>(this, (r, m) =>
+            {
+                ButtonStateChanged?.Invoke(this, new GamepadButtonEventArgs { Button = m.Button, IsPressed = m.IsPressed });
+            });
         }
     }
 }
