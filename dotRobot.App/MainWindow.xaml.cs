@@ -5,16 +5,18 @@ namespace dotRobot;
 
 public partial class MainWindow : Window
 {
-	public MainWindow()
+    private readonly WindowStyler windowStyler;
+
+    public MainWindow(MainPage mainPage, WindowStyler windowStyler)
 	{
 		InitializeComponent();
-		Page = new MainPage();
+		Page = mainPage;
+        this.windowStyler = windowStyler;
     }
 
     protected override void OnHandlerChanged()
     {
         base.OnHandlerChanged();
-        var styler = new WindowStyler();
-        styler.Style(this);
+        windowStyler.Style(this);
     }
 }

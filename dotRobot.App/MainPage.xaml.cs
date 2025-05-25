@@ -13,12 +13,11 @@ namespace dotRobot
     public partial class MainPage : ContentPage
     {
         private MainPageViewModel ViewModel => (MainPageViewModel)BindingContext;
-        private GamepadService gamepadService = new();
 
-        public MainPage()
+        public MainPage(MainPageViewModel mainPageViewModel, GamepadService gamepadService)
         {
             InitializeComponent();
-            Application.Current.UserAppTheme = AppTheme.Dark;
+            BindingContext = mainPageViewModel;
 
             ViewModel.RequestAlert += async (s, alert) =>
             {

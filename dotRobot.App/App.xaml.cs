@@ -2,14 +2,18 @@
 {
     public partial class App : Application
     {
-        public App()
+        private readonly MainWindow mainWindow;
+
+        public App(MainWindow mainWindow)
         {
             InitializeComponent();
+            this.mainWindow = mainWindow;
+            UserAppTheme = AppTheme.Dark;
         }
 
         protected override Window CreateWindow(IActivationState? activationState)
         {
-            return new MainWindow();
+            return mainWindow;
         }
     }
 }

@@ -13,7 +13,7 @@ namespace dotRobot
 {
     public partial class MainPageViewModel : ObservableObject
     {
-        private readonly BluetoothService bluetoothService = new();
+        private readonly BluetoothService bluetoothService;
         private bool isConnected;
         private bool isConnecting;
         private bool canConnect;
@@ -38,11 +38,13 @@ namespace dotRobot
             set => SetProperty(ref canConnect, value);
         }
 
-        public MainPageViewModel()
+        public MainPageViewModel(BluetoothService bluetoothService)
         {
             IsConnected = false;
             IsConnecting = false;
             CanConnect = true;
+
+            this.bluetoothService = bluetoothService;
             bluetoothService.Disconnected += BluetoothService_Disconnected;
         }
 
