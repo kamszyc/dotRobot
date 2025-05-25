@@ -8,7 +8,6 @@
         {
             InitializeComponent();
             this.mainWindow = mainWindow;
-            UserAppTheme = AppTheme.Dark;
         }
 
         protected override Window CreateWindow(IActivationState? activationState)
