@@ -116,6 +116,9 @@ namespace dotRobot
         [RelayCommand]
         private async Task RightTurnButtonUnchecked() => await SendCommand(Commands.RightTurnOff);
 
+        [RelayCommand]
+        private async Task HornButtonPressed() => await SendCommand(Commands.Horn);
+
         private void BluetoothService_Disconnected(object? sender, EventArgs e)
         {
             IsConnected = false;

@@ -2,6 +2,7 @@ using dotRobot.Bluetooth;
 using dotRobot.Common;
 using dotRobot.Lights;
 using dotRobot.Motor;
+using dotRobot.Sound;
 using Iot.Device.DCMotor;
 using nanoFramework.Device.Bluetooth;
 using nanoFramework.Device.Bluetooth.GenericAttributeProfile;
@@ -18,6 +19,7 @@ namespace dotRobot
         private static RobotControlBluetoothService robotControlBluetoothService;
         private static MotorController motorController;
         private static LightsController lightsController;
+        private static SoundController soundController;
 
         public static void Main()
         {
@@ -27,6 +29,7 @@ namespace dotRobot
 
             motorController = new MotorController();
             lightsController = new LightsController();
+            soundController = new SoundController();
 
             while (true)
             {
@@ -71,6 +74,9 @@ namespace dotRobot
                     break;
                 case Commands.RightTurnOff:
                     lightsController.DisableRightTurn();
+                    break;
+                case Commands.Horn:
+                    soundController.PlayHornSound();
                     break;
             }
         }
