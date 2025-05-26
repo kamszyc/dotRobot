@@ -17,9 +17,15 @@ namespace dotRobot
                 return true;
             }
 
+            var gamepadButton = MapButton(e.KeyCode);
+            if (gamepadButton == GamepadButtons.None)
+            {
+                return base.DispatchKeyEvent(e);
+            }
+
             WeakReferenceMessenger.Default.Send(new GamepadButtonMessage()
             {
-                Button = MapButton(e.KeyCode),
+                Button = gamepadButton,
                 IsPressed = e.Action == KeyEventActions.Down
             });
             return true;
