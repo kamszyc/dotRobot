@@ -14,6 +14,11 @@ namespace dotRobot.Gamepad
 
         public void Start(IDispatcher dispatcher)
         {
+            if (WeakReferenceMessenger.Default.IsRegistered<GamepadButtonMessage>(this))
+            {
+                return;
+            }
+
             WeakReferenceMessenger.Default.Register<GamepadButtonMessage>(this, (r, m) =>
             {
                 ButtonStateChanged?.Invoke(this, new GamepadButtonEventArgs { Button = m.Button, IsPressed = m.IsPressed });

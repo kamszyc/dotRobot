@@ -12,6 +12,8 @@ namespace dotRobot
 {
     public partial class MainPage : ContentPage
     {
+        private readonly GamepadService gamepadService;
+
         private MainPageViewModel ViewModel => (MainPageViewModel)BindingContext;
 
         public MainPage(MainPageViewModel mainPageViewModel, GamepadService gamepadService)
@@ -23,7 +25,12 @@ namespace dotRobot
             {
                 await DisplayAlert("Information", alert, "OK");
             };
+            this.gamepadService = gamepadService;
+        }
 
+        protected override void OnAppearing()
+        {
+            base.OnAppearing();
             gamepadService.Start(Dispatcher);
             gamepadService.ButtonStateChanged += GamepadService_ButtonStateChanged;
         }
@@ -120,6 +127,17 @@ namespace dotRobot
                         {
                             VisualStateManager.GoToState(LightsButton, "Unchecked");
                         }
+                    }
+                    break;
+                case GamepadButtons.X:
+                    if (e.IsPressed)
+                    {
+                        VisualStateManager.GoToState(HornButton, "Pressed");
+                        ViewModel.HornButtonPressedCommand.Execute(null);
+                    }
+                    else
+                    {
+                        VisualStateManager.GoToState(HornButton, "Normal");
                     }
                     break;
             }
