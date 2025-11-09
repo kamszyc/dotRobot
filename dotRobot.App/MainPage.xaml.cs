@@ -129,17 +129,6 @@ namespace dotRobot
                         }
                     }
                     break;
-                case GamepadButtons.X:
-                    if (e.IsPressed)
-                    {
-                        VisualStateManager.GoToState(HornButton, "Pressed");
-                        ViewModel.HornButtonPressedCommand.Execute(null);
-                    }
-                    else
-                    {
-                        VisualStateManager.GoToState(HornButton, "Normal");
-                    }
-                    break;
             }
         }
     }

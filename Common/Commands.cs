@@ -16,6 +16,5 @@ namespace dotRobot.Common
         public const string LeftTurnOff = "TLE0";
         public const string RightTurnOn = "TRI1";
         public const string RightTurnOff = "TRI0";
-        public const string Horn = "HORN";
     }
 }

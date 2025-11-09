@@ -208,19 +208,6 @@
                         BindingContext="{Binding Source={x:Reference this}, Path=BindingContext}"  />
                 </Button.Behaviors>
             </Button>
-
-            <Button
-                x:Name="HornButton"
-                Grid.Row="2"
-                Grid.Column="2"
-                IsVisible="{Binding IsConnected}" 
-                Margin="20"
-                Text="📢"
-                FontSize="30"
-                HorizontalOptions="FillAndExpand"
-                VerticalOptions="FillAndExpand"
-                Command="{Binding HornButtonPressedCommand}"
-                />
         </Grid>
     </Grid>
 
