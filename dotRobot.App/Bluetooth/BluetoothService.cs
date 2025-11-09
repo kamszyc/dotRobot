@@ -1,5 +1,7 @@
 ﻿using dotRobot.Common;
 using InTheHand.Bluetooth;
+using Polly;
+using Polly.Retry;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -33,7 +35,17 @@ namespace dotRobot.Bluetooth
                 throw new InvalidOperationException("No device found with the specified name.");
             }
 
-            await btDevice.Gatt.ConnectAsync();
+            ResiliencePipeline pipeline = new ResiliencePipelineBuilder()
+                .AddRetry(new RetryStrategyOptions()
+                {
+                    ShouldHandle = new PredicateBuilder().Handle<Exception>().HandleResult(_ => !btDevice.Gatt.IsConnected),
+                    Delay = TimeSpan.FromSeconds(5),
+                    MaxRetryAttempts = 2,
+                })
+                .AddTimeout(TimeSpan.FromSeconds(10))
+                .Build();
+
+            await pipeline.ExecuteAsync(async _ => await btDevice.Gatt.ConnectAsync());
             if (!btDevice.Gatt.IsConnected)
             {
                 throw new InvalidOperationException($"Failed to connect to {btDevice.Name}.");

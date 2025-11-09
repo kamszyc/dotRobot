@@ -66,7 +66,7 @@ namespace dotRobot
 
                 IsConnected = bluetoothService.IsConnected;
             }
-            catch (InvalidOperationException ex)
+            catch (Exception ex)
             {
                 RequestAlert?.Invoke(this, ex.Message);
                 IsConnecting = false;
