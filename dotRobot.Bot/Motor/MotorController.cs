@@ -22,7 +22,7 @@ namespace dotRobot.Motor
 
             rightMotor = DCMotor.Create(
                 PwmChannel.CreateFromPin(26, 50, 0.0),
-                21, 22);
+                22, 21);
 
             leftMotor.Speed = 0;
             rightMotor.Speed = 0;
@@ -30,26 +30,26 @@ namespace dotRobot.Motor
 
         public void Forward()
         {
-            leftMotor.Speed = 0.2;
-            rightMotor.Speed = 0.2;
+            leftMotor.Speed = 0.5;
+            rightMotor.Speed = 0.5;
         }
 
         public void Backward()
         {
-            leftMotor.Speed = -0.2;
-            rightMotor.Speed = -0.2;
+            leftMotor.Speed = -0.5;
+            rightMotor.Speed = -0.5;
         }
 
         public void TurnLeft()
         {
-            leftMotor.Speed = -0.2;
-            rightMotor.Speed = 0.2;
+            leftMotor.Speed = -0.5;
+            rightMotor.Speed = 0.5;
         }
 
         public void TurnRight()
         {
-            leftMotor.Speed = 0.2;
-            rightMotor.Speed = -0.2;
+            leftMotor.Speed = 0.5;
+            rightMotor.Speed = -0.5;
         }
 
         public void Stop()
