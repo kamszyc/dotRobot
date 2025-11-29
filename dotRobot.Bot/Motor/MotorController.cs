@@ -30,14 +30,14 @@ namespace dotRobot.Motor
 
         public void Forward()
         {
-            leftMotor.Speed = 0.5;
-            rightMotor.Speed = 0.5;
+            leftMotor.Speed = 0.8;
+            rightMotor.Speed = 0.8;
         }
 
         public void Backward()
         {
-            leftMotor.Speed = -0.5;
-            rightMotor.Speed = -0.5;
+            leftMotor.Speed = -0.8;
+            rightMotor.Speed = -0.8;
         }
 
         public void TurnLeft()
