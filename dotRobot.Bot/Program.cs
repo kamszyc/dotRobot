@@ -73,6 +73,15 @@ namespace dotRobot
                     lightsController.DisableRightTurn();
                     break;
             }
+
+            if (eventArgs.Command.StartsWith(Commands.Speed))
+            {
+                string speedLevelString = eventArgs.Command.Substring(Commands.Speed.Length);
+                if (int.TryParse(speedLevelString, out int speedValue))
+                {
+                    motorController.SetSpeedLevel(speedValue);
+                }
+            }
         }
     }
 }

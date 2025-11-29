@@ -17,6 +17,7 @@ namespace dotRobot
         private bool isConnected;
         private bool isConnecting;
         private bool canConnect;
+        private int currentSpeedLevel;
 
         public event EventHandler<string>? RequestAlert;
 
@@ -36,6 +37,12 @@ namespace dotRobot
         {
             get => canConnect;
             set => SetProperty(ref canConnect, value);
+        }
+
+        public int CurrentSpeedLevel
+        {
+            get => currentSpeedLevel;
+            set => SetProperty(ref currentSpeedLevel, value);
         }
 
         public MainPageViewModel(BluetoothService bluetoothService)
@@ -60,6 +67,9 @@ namespace dotRobot
                 CanConnect = false;
 
                 await bluetoothService.Connect();
+
+                CurrentSpeedLevel = Constants.DefaultSpeedLevel;
+                await SendSpeedCommand();
 
                 IsConnecting = false;
                 CanConnect = !bluetoothService.IsConnected;
@@ -116,15 +126,36 @@ namespace dotRobot
         [RelayCommand]
         private async Task RightTurnButtonUnchecked() => await SendCommand(Commands.RightTurnOff);
 
+        [RelayCommand]
+        private async Task SpeedMinusPressed()
+        {
+            CurrentSpeedLevel = Math.Max(Constants.MinSpeedLevel, CurrentSpeedLevel - 1);
+            await SendSpeedCommand();
+        }
+
+        [RelayCommand]
+        private async Task SpeedPlusPressed()
+        {
+            CurrentSpeedLevel = Math.Min(Constants.MaxSpeedLevel, CurrentSpeedLevel + 1);
+            await SendSpeedCommand();
+        }
+
         private void BluetoothService_Disconnected(object? sender, EventArgs e)
         {
             IsConnected = false;
             CanConnect = true;
+            CurrentSpeedLevel = Constants.DefaultSpeedLevel;
         }
 
-        private Task SendCommand(string command)
+        private async Task SendSpeedCommand()
         {
-            return bluetoothService.SendCommand(command);
+            string command = Commands.Speed + CurrentSpeedLevel;
+            await SendCommand(command);
+        }
+
+        private async Task SendCommand(string command)
+        {
+            await bluetoothService.SendCommand(command);
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using Iot.Device.DCMotor;
+﻿using dotRobot.Common;
+using Iot.Device.DCMotor;
 using nanoFramework.Hardware.Esp32;
 using System;
 using System.Device.Pwm;
@@ -8,8 +9,11 @@ namespace dotRobot.Motor
 {
     public class MotorController
     {
-        public DCMotor leftMotor;
-        public DCMotor rightMotor;
+        private DCMotor leftMotor;
+        private DCMotor rightMotor;
+        private int speedLevel = Constants.DefaultSpeedLevel;
+
+        private const double maxSpeed = 0.8;
 
         public MotorController()
         {
@@ -30,32 +34,42 @@ namespace dotRobot.Motor
 
         public void Forward()
         {
-            leftMotor.Speed = 0.8;
-            rightMotor.Speed = 0.8;
+            leftMotor.Speed = CalculateSpeed();
+            rightMotor.Speed = CalculateSpeed();
         }
 
         public void Backward()
         {
-            leftMotor.Speed = -0.8;
-            rightMotor.Speed = -0.8;
+            leftMotor.Speed = -CalculateSpeed();
+            rightMotor.Speed = -CalculateSpeed();
         }
 
         public void TurnLeft()
         {
-            leftMotor.Speed = -0.5;
-            rightMotor.Speed = 0.5;
+            leftMotor.Speed = -CalculateSpeed();
+            rightMotor.Speed = CalculateSpeed();
         }
 
         public void TurnRight()
         {
-            leftMotor.Speed = 0.5;
-            rightMotor.Speed = -0.5;
+            leftMotor.Speed = CalculateSpeed();
+            rightMotor.Speed = -CalculateSpeed();
         }
 
         public void Stop()
         {
             leftMotor.Speed = 0;
             rightMotor.Speed = 0;
+        }
+
+        public void SetSpeedLevel(int level)
+        {
+            speedLevel = level;
+        }
+
+        private double CalculateSpeed()
+        {
+            return ((double)speedLevel / Constants.MaxSpeedLevel) * maxSpeed;
         }
     }
 }

@@ -39,7 +39,7 @@
                 Command="{Binding ConnectToRobotCommand}"/>
         </Grid>
 
-        <Grid RowDefinitions="{OnPlatform Android='*,*,*,*,2*', WinUI='*,*,*,*'}" ColumnDefinitions="*,*,*" IsVisible="{Binding IsConnected}">
+        <Grid RowDefinitions="{OnPlatform Android='*,*,*,*,*,*', WinUI='*,*,*,*,*'}" ColumnDefinitions="*,*,*" IsVisible="{Binding IsConnected}">
             <Label
                 Text="Connected"
                 Grid.Row="0"
@@ -205,6 +205,49 @@
                     <toolkit:EventToCommandBehavior
                         EventName="Released"
                         Command="{Binding ArrowDownReleasedCommand}"
+                        BindingContext="{Binding Source={x:Reference this}, Path=BindingContext}"  />
+                </Button.Behaviors>
+            </Button>
+
+            <Button
+                Grid.Row="4"
+                Grid.Column="0"
+                IsVisible="{Binding IsConnected}" 
+                Margin="20"
+                Text="SPEED-"
+                FontSize="15"
+                HorizontalOptions="FillAndExpand"
+                VerticalOptions="FillAndExpand">
+                <Button.Behaviors>
+                    <toolkit:EventToCommandBehavior
+                        EventName="Pressed"
+                        Command="{Binding SpeedMinusPressedCommand}"
+                        BindingContext="{Binding Source={x:Reference this}, Path=BindingContext}"  />
+                </Button.Behaviors>
+            </Button>
+            
+            <Label
+                Text="{Binding CurrentSpeedLevel}"
+                Grid.Row="4"
+                Grid.Column="1"
+                FontSize="30"
+                IsVisible="{Binding IsConnected}" 
+                HorizontalOptions="Center" 
+                VerticalOptions="Center" />
+
+            <Button
+                Grid.Row="4"
+                Grid.Column="2"
+                IsVisible="{Binding IsConnected}" 
+                Margin="20"
+                Text="SPEED+"
+                FontSize="15"
+                HorizontalOptions="FillAndExpand"
+                VerticalOptions="FillAndExpand">
+                <Button.Behaviors>
+                    <toolkit:EventToCommandBehavior
+                        EventName="Pressed"
+                        Command="{Binding SpeedPlusPressedCommand}"
                         BindingContext="{Binding Source={x:Reference this}, Path=BindingContext}"  />
                 </Button.Behaviors>
             </Button>
