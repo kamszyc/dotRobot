@@ -11,8 +11,7 @@ namespace dotRobot.Lights
         private GpioPin rightTurnYellowLed;
         private bool leftTurn = false;
         private bool rightTurn = false;
-        private bool leftTurnOn = false;
-        private bool rightTurnOn = false;
+        private bool turnLightsCurrentlyOn = false;
 
         public LightsController()
         {
@@ -27,23 +26,25 @@ namespace dotRobot.Lights
 
         public void Tick()
         {
-            if (leftTurn)
+            if (leftTurn && turnLightsCurrentlyOn)
             {
-                ToggleLeftTurn();
+                TurnOnLeftTurn();
             }
             else
             {
                 TurnOffLeftTurn();
             }
 
-            if (rightTurn)
+            if (rightTurn && turnLightsCurrentlyOn)
             {
-                ToggleRightTurn();
+                TurnOnRightTurn();
             }
             else
             {
                 TurnOffRightTurn();
             }
+
+            turnLightsCurrentlyOn = !turnLightsCurrentlyOn;
         }
 
         public void EnableLeftTurn()
@@ -76,21 +77,19 @@ namespace dotRobot.Lights
             whiteLed.Write(PinValue.Low);
         }
 
-        private void ToggleLeftTurn()
+        private void TurnOnLeftTurn()
         {
-            leftTurnYellowLed.Write(leftTurnOn ? PinValue.Low : PinValue.High);
-            leftTurnOn = !leftTurnOn;
-        }
-
-        private void ToggleRightTurn()
-        {
-            rightTurnYellowLed.Write(rightTurnOn ? PinValue.Low : PinValue.High);
-            rightTurnOn = !rightTurnOn;
+            leftTurnYellowLed.Write(PinValue.High);
         }
 
         private void TurnOffLeftTurn()
         {
             leftTurnYellowLed.Write(PinValue.Low);
+        }
+
+        private void TurnOnRightTurn()
+        {
+            rightTurnYellowLed.Write(PinValue.High);
         }
 
         private void TurnOffRightTurn()
