@@ -88,25 +88,25 @@ namespace dotRobot
         private async Task ArrowUpPressed() => await SendCommand(Commands.Forward);
 
         [RelayCommand]
-        private async Task ArrowUpReleased() => await SendCommand(Commands.Stop);
+        private async Task ArrowUpReleased() => await SendCommand(Commands.ForwardStop);
 
         [RelayCommand]
         private async Task ArrowDownPressed() => await SendCommand(Commands.Backward);
 
         [RelayCommand]
-        private async Task ArrowDownReleased() => await SendCommand(Commands.Stop);
+        private async Task ArrowDownReleased() => await SendCommand(Commands.BackwardStop);
 
         [RelayCommand]
         private async Task ArrowLeftPressed() => await SendCommand(Commands.TurnLeft);
 
         [RelayCommand]
-        private async Task ArrowLeftReleased() => await SendCommand(Commands.Stop);
+        private async Task ArrowLeftReleased() => await SendCommand(Commands.TurnLeftStop);
 
         [RelayCommand]
         private async Task ArrowRightPressed() => await SendCommand(Commands.TurnRight);
 
         [RelayCommand]
-        private async Task ArrowRightReleased() => await SendCommand(Commands.Stop);
+        private async Task ArrowRightReleased() => await SendCommand(Commands.TurnRightStop);
 
         [RelayCommand]
         private async Task LightsButtonChecked() => await SendCommand(Commands.LightsOn);

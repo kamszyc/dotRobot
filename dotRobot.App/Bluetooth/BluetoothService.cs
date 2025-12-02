@@ -80,7 +80,7 @@ namespace dotRobot.Bluetooth
                     return;
                 }
 
-                await characteristic.WriteValueWithoutResponseAsync(Encoding.UTF8.GetBytes(command));
+                await characteristic.WriteValueWithResponseAsync(Encoding.UTF8.GetBytes(command));
 
                 Debug.WriteLine($"Command sent: {command}");
             }

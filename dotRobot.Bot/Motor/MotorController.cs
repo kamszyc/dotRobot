@@ -46,20 +46,28 @@ namespace dotRobot.Motor
 
         public void TurnLeft()
         {
-            leftMotor.Speed = -CalculateSpeed();
-            rightMotor.Speed = CalculateSpeed();
+            leftMotor.Speed = leftMotor.Speed / 2;
         }
 
         public void TurnRight()
         {
-            leftMotor.Speed = CalculateSpeed();
-            rightMotor.Speed = -CalculateSpeed();
+            rightMotor.Speed = rightMotor.Speed / 2;
         }
 
-        public void Stop()
+        public void StopForwardOrBackward()
         {
             leftMotor.Speed = 0;
             rightMotor.Speed = 0;
+        }
+
+        public void StopTurnLeft()
+        {
+            leftMotor.Speed = leftMotor.Speed * 2;
+        }
+
+        public void StopTurnRight()
+        {
+            rightMotor.Speed = rightMotor.Speed * 2;
         }
 
         public void SetSpeedLevel(int level)

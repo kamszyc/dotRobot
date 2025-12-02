@@ -51,8 +51,17 @@ namespace dotRobot
                 case Commands.Backward:
                     motorController.Backward();
                     break;
-                case Commands.Stop:
-                    motorController.Stop();
+                case Commands.ForwardStop:
+                    motorController.StopForwardOrBackward();
+                    break;
+                case Commands.BackwardStop:
+                    motorController.StopForwardOrBackward();
+                    break;
+                case Commands.TurnLeftStop:
+                    motorController.StopTurnLeft();
+                    break;
+                case Commands.TurnRightStop:
+                    motorController.StopTurnRight();
                     break;
                 case Commands.LightsOn:
                     lightsController.TurnOnWhiteLed();
