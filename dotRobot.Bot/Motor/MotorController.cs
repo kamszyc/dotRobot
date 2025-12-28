@@ -11,7 +11,7 @@ namespace dotRobot.Motor
     {
         private DCMotor leftMotor;
         private DCMotor rightMotor;
-        private int speedLevel = Constants.DefaultSpeedLevel;
+        private int speedLevel = SpeedLevels.Default;
 
         private const double maxSpeed = 0.8;
 
@@ -77,7 +77,7 @@ namespace dotRobot.Motor
 
         private double CalculateSpeed()
         {
-            return ((double)speedLevel / Constants.MaxSpeedLevel) * maxSpeed;
+            return ((double)speedLevel / SpeedLevels.Max) * maxSpeed;
         }
     }
 }

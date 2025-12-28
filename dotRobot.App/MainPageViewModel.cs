@@ -68,7 +68,7 @@ namespace dotRobot
 
                 await bluetoothService.Connect();
 
-                CurrentSpeedLevel = Constants.DefaultSpeedLevel;
+                CurrentSpeedLevel = SpeedLevels.Default;
                 await SendSpeedCommand();
 
                 IsConnecting = false;
@@ -129,14 +129,14 @@ namespace dotRobot
         [RelayCommand]
         private async Task SpeedMinusPressed()
         {
-            CurrentSpeedLevel = Math.Max(Constants.MinSpeedLevel, CurrentSpeedLevel - 1);
+            CurrentSpeedLevel = Math.Max(SpeedLevels.Min, CurrentSpeedLevel - 1);
             await SendSpeedCommand();
         }
 
         [RelayCommand]
         private async Task SpeedPlusPressed()
         {
-            CurrentSpeedLevel = Math.Min(Constants.MaxSpeedLevel, CurrentSpeedLevel + 1);
+            CurrentSpeedLevel = Math.Min(SpeedLevels.Max, CurrentSpeedLevel + 1);
             await SendSpeedCommand();
         }
 
@@ -144,7 +144,7 @@ namespace dotRobot
         {
             IsConnected = false;
             CanConnect = true;
-            CurrentSpeedLevel = Constants.DefaultSpeedLevel;
+            CurrentSpeedLevel = SpeedLevels.Default;
         }
 
         private async Task SendSpeedCommand()
