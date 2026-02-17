@@ -23,7 +23,7 @@ namespace dotRobot
 
             ViewModel.RequestAlert += async (s, alert) =>
             {
-                await DisplayAlert("Information", alert, "OK");
+                await DisplayAlertAsync("Information", alert, "OK");
             };
             this.gamepadService = gamepadService;
         }
