@@ -1,7 +1,6 @@
 ﻿using CommunityToolkit.Maui;
 using dotRobot.Bluetooth;
 using dotRobot.Gamepad;
-using dotRobot.Style;
 using Microsoft.Extensions.Logging;
 using Plugin.Maui.KeyListener;
 
@@ -28,7 +27,6 @@ namespace dotRobot
             builder.Services.AddSingleton<MainWindow>();
             builder.Services.AddSingleton<MainPage>();
             builder.Services.AddSingleton<MainPageViewModel>();
-            builder.Services.AddTransient<WindowStyler>();
             builder.Services.AddTransient<GamepadService>();
             builder.Services.AddTransient<BluetoothService>();
 
