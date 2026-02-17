@@ -1,0 +1,6 @@
+<Solution>
+  <Project Path="dotRobot.App/dotRobot.App.csproj" />
+  <Project Path="dotRobot.Bot/dotRobot.Bot.nfproj" Type="11a8dd76-328b-46df-9f39-f559912d0360">
+    <Deploy />
+  </Project>
+</Solution>
