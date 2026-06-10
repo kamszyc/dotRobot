@@ -48,6 +48,24 @@
                 HorizontalOptions="Center" 
                 VerticalOptions="Center" />
 
+            <Button
+                x:Name="ShowArrowsButton"
+                Grid.Row="0"
+                Grid.Column="2"
+                IsVisible="{Binding IsConnected}" 
+                Margin="20"
+                Text="ARROWS"
+                FontSize="30"
+                HorizontalOptions="FillAndExpand"
+                VerticalOptions="FillAndExpand">
+                <Button.Behaviors>
+                    <toolkit:EventToCommandBehavior
+                        EventName="Released"
+                        Command="{Binding ShowArrowsButtonReleasedCommand}"
+                        BindingContext="{Binding Source={x:Reference this}, Path=BindingContext}"  />
+                </Button.Behaviors>
+            </Button>
+
             <localControls:CheckboxButton
                 x:Name="LightsButton"
                 Grid.Row="1"
@@ -121,7 +139,7 @@
                 x:Name="ArrowLeft"
                 Grid.Row="3"
                 Grid.Column="0"
-                IsVisible="{Binding IsConnected}" 
+                IsVisible="{Binding ShowArrows}" 
                 Margin="20"
                 Text="◀"
                 FontSize="30"
@@ -144,7 +162,7 @@
                 x:Name="ArrowRight"
                 Grid.Row="3"
                 Grid.Column="2"
-                IsVisible="{Binding IsConnected}" 
+                IsVisible="{Binding ShowArrows}" 
                 Margin="20"
                 Text="▶"
                 FontSize="30"
@@ -167,7 +185,7 @@
                 x:Name="ArrowUp"
                 Grid.Row="2"
                 Grid.Column="1"
-                IsVisible="{Binding IsConnected}" 
+                IsVisible="{Binding ShowArrows}" 
                 Margin="20"
                 Text="▲"
                 FontSize="30"
@@ -190,7 +208,7 @@
                 x:Name="ArrowDown"
                 Grid.Row="3"
                 Grid.Column="1"
-                IsVisible="{Binding IsConnected}" 
+                IsVisible="{Binding ShowArrows}" 
                 Margin="20"
                 Text="▼"
                 FontSize="30"
@@ -209,10 +227,19 @@
                 </Button.Behaviors>
             </Button>
 
+            <localControls:Joystick
+                x:Name="Joystick"
+                Grid.Row="2"
+                Grid.RowSpan="2"
+                Grid.Column="0"
+                Grid.ColumnSpan="3"
+                IsVisible="{Binding ShowArrows, Converter={StaticResource InvertedBoolConverter}}">
+            </localControls:Joystick>
+
             <Button
                 Grid.Row="4"
                 Grid.Column="0"
-                IsVisible="{Binding IsConnected}" 
+                IsVisible="{Binding ShowArrows}" 
                 Margin="20"
                 Text="SPEED-"
                 FontSize="15"
@@ -231,14 +258,14 @@
                 Grid.Row="4"
                 Grid.Column="1"
                 FontSize="30"
-                IsVisible="{Binding IsConnected}" 
+                IsVisible="{Binding ShowArrows}" 
                 HorizontalOptions="Center" 
                 VerticalOptions="Center" />
 
             <Button
                 Grid.Row="4"
                 Grid.Column="2"
-                IsVisible="{Binding IsConnected}" 
+                IsVisible="{Binding ShowArrows}" 
                 Margin="20"
                 Text="SPEED+"
                 FontSize="15"

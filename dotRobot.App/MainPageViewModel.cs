@@ -13,19 +13,39 @@ namespace dotRobot
 {
     public partial class MainPageViewModel : ObservableObject
     {
+        private const string EnableArrowsPreferencesKey = "EnableArrows";
+
         private readonly BluetoothService bluetoothService;
         private bool isConnected;
         private bool isConnecting;
         private bool canConnect;
         private int currentSpeedLevel;
+        private bool enableArrows;
 
         public event EventHandler<string>? RequestAlert;
 
         public bool IsConnected
         {
             get => isConnected;
-            set => SetProperty(ref isConnected, value);
+            set
+            {
+                SetProperty(ref isConnected, value);
+                OnPropertyChanged(nameof(ShowArrows));
+            }
         }
+
+        public bool EnableArrows
+        {
+            get => enableArrows;
+            set
+            {
+                SetProperty(ref enableArrows, value);
+                OnPropertyChanged(nameof(ShowArrows));
+                Preferences.Set(EnableArrowsPreferencesKey, value);
+            }
+        }
+
+        public bool ShowArrows => EnableArrows && IsConnected;
 
         public bool IsConnecting
         {
@@ -50,6 +70,7 @@ namespace dotRobot
             IsConnected = false;
             IsConnecting = false;
             CanConnect = true;
+            EnableArrows = Preferences.Get(EnableArrowsPreferencesKey, false);
 
             this.bluetoothService = bluetoothService;
             bluetoothService.Disconnected += BluetoothService_Disconnected;
@@ -83,6 +104,9 @@ namespace dotRobot
                 CanConnect = true;
             }
         }
+
+        [RelayCommand]
+        private async Task ShowArrowsButtonReleased() => EnableArrows = !EnableArrows;
 
         [RelayCommand]
         private async Task ArrowUpPressed() => await SendCommand(Commands.Forward);
