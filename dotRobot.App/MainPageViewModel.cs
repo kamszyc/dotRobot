@@ -106,6 +106,12 @@ namespace dotRobot
         }
 
         [RelayCommand]
+        private async Task JoystickPositionReset() => await SendCommand(Commands.JoystickReset);
+
+        [RelayCommand]
+        private async Task JoystickPositionChanged(Point position) => await SendJoystickCommand(position);
+
+        [RelayCommand]
         private async Task ShowArrowsButtonReleased() => EnableArrows = !EnableArrows;
 
         [RelayCommand]
@@ -174,6 +180,15 @@ namespace dotRobot
         private async Task SendSpeedCommand()
         {
             string command = Commands.Speed + CurrentSpeedLevel;
+            await SendCommand(command);
+        }
+
+        private async Task SendJoystickCommand(Point pos)
+        {
+            int x = (int)double.Round(pos.X * SpeedLevels.Max);
+            int y = (int)double.Round(pos.Y * SpeedLevels.Max);
+
+            string command = Commands.JoystickMove + x.ToString("+0;-0;+0") + y.ToString("+0;-0;+0");
             await SendCommand(command);
         }
 

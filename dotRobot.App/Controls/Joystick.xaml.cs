@@ -15,6 +15,9 @@ namespace dotRobot.Controls
             this.GestureRecognizers.Add(panGesture);
         }
 
+        public event EventHandler? PositionReset;
+        public event EventHandler<Point>? PositionChanged;
+
         // To make the control square
         protected override void OnSizeAllocated(double width, double height)
         {
@@ -26,7 +29,7 @@ namespace dotRobot.Controls
             HeightRequest = side;
         }
 
-        private void OnPanUpdated(object sender, PanUpdatedEventArgs e)
+        private void OnPanUpdated(object? sender, PanUpdatedEventArgs e)
         {
             switch (e.StatusType)
             {
@@ -36,10 +39,12 @@ namespace dotRobot.Controls
                     double y = Math.Clamp(e.TotalY, -radius, radius);
                     Thumb.TranslationX = x;
                     Thumb.TranslationY = y;
+                    PositionChanged?.Invoke(this, new Point(x / radius, y / radius));
                     break;
 
                 case GestureStatus.Completed:
                     ResetThumb();
+                    PositionReset?.Invoke(this, EventArgs.Empty);
                     break;
             }
         }

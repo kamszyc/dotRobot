@@ -234,6 +234,12 @@
                 Grid.Column="0"
                 Grid.ColumnSpan="3"
                 IsVisible="{Binding ShowArrows, Converter={StaticResource InvertedBoolConverter}}">
+                <localControls:Joystick.Behaviors>
+                    <toolkit:EventToCommandBehavior
+                        EventName="PositionReset"
+                        Command="{Binding JoystickPositionResetCommand}" 
+                        BindingContext="{Binding Source={x:Reference this}, Path=BindingContext}" />
+                </localControls:Joystick.Behaviors>
             </localControls:Joystick>
 
             <Button

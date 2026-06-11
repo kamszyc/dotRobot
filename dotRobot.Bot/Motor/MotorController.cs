@@ -13,7 +13,7 @@ namespace dotRobot.Motor
         private DCMotor rightMotor;
         private int speedLevel = SpeedLevels.Default;
 
-        private const double maxSpeed = 0.8;
+        private const double maxMotorSpeed = 0.8;
 
         public MotorController()
         {
@@ -77,7 +77,24 @@ namespace dotRobot.Motor
 
         private double CalculateSpeed()
         {
-            return ((double)speedLevel / SpeedLevels.Max) * maxSpeed;
+            return ((double)speedLevel / SpeedLevels.Max) * maxMotorSpeed;
+        }
+
+        public void SetJoystickPosition(int x, int y)
+        {
+            double xPercent = (double)x / SpeedLevels.Max;
+            double yPercent = (double)y / SpeedLevels.Max;
+
+            var leftMotorSpeed = yPercent * maxMotorSpeed;
+            if (xPercent > 0)
+                leftMotorSpeed *= xPercent;
+
+            var rightMotorSpeed = yPercent * maxMotorSpeed;
+            if (yPercent < 0)
+                rightMotorSpeed *= (-xPercent);
+
+            leftMotor.Speed = leftMotorSpeed;
+            rightMotor.Speed = rightMotorSpeed;
         }
     }
 }
