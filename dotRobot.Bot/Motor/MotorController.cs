@@ -86,13 +86,12 @@ namespace dotRobot.Motor
             double yPercent = (double)y / SpeedLevels.Max;
 
             var leftMotorSpeed = yPercent * maxMotorSpeed;
-            if (xPercent > 0)
-                leftMotorSpeed *= xPercent;
+            if (xPercent < 0)
+                leftMotorSpeed *= (-xPercent);
 
             var rightMotorSpeed = yPercent * maxMotorSpeed;
-            if (yPercent < 0)
-                rightMotorSpeed *= (-xPercent);
-
+            if (xPercent > 0)
+                rightMotorSpeed *= xPercent;
             leftMotor.Speed = leftMotorSpeed;
             rightMotor.Speed = rightMotorSpeed;
         }

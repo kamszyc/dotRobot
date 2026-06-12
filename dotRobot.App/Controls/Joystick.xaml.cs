@@ -39,7 +39,7 @@ namespace dotRobot.Controls
                     double y = Math.Clamp(e.TotalY, -radius, radius);
                     Thumb.TranslationX = x;
                     Thumb.TranslationY = y;
-                    PositionChanged?.Invoke(this, new Point(x / radius, y / radius));
+                    PositionChanged?.Invoke(this, new Point(x / radius, (-y) / radius));
                     break;
 
                 case GestureStatus.Completed:
