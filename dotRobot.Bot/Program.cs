@@ -57,6 +57,9 @@ namespace dotRobot
                 case Commands.BackwardStop:
                     motorController.StopForwardOrBackward();
                     break;
+                case Commands.JoystickReset:
+                    motorController.StopForwardOrBackward();
+                    break;
                 case Commands.TurnLeftStop:
                     motorController.StopTurnLeft();
                     break;
@@ -89,6 +92,17 @@ namespace dotRobot
                 if (int.TryParse(speedLevelString, out int speedValue))
                 {
                     motorController.SetSpeedLevel(speedValue);
+                }
+            }
+
+            if (eventArgs.Command.StartsWith(Commands.JoystickMove))
+            {
+                string xString = eventArgs.Command.Substring(Commands.JoystickMove.Length, 2);
+                string yString = eventArgs.Command.Substring(Commands.JoystickMove.Length + 2, 2);
+
+                if (int.TryParse(xString, out int x) && int.TryParse(yString, out int y))
+                {
+                    motorController.SetJoystickPosition(x, y);
                 }
             }
         }

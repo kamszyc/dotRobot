@@ -5,6 +5,8 @@ namespace dotRobot.Common
 {
     public static class Commands
     {
+        public const string JoystickReset = "JRES";
+        public const string JoystickMove = "JMOV";
         public const string Forward = "FORW";
         public const string Backward = "BACK";
         public const string TurnLeft = "LEFT";

@@ -10,7 +10,7 @@ namespace dotRobot.Bluetooth
 {
     public class RobotControlBluetoothService
     {
-        public const int CommandLength = 4;
+        public const int MinCommandLength = 4;
 
         public delegate void CommandReceivedEventHandler(RobotControlBluetoothService sender, RobotControlCommandEventArgs robotControlCommandEventArgs);
         public CommandReceivedEventHandler CommandReceived;
@@ -51,14 +51,14 @@ namespace dotRobot.Bluetooth
         {
             GattWriteRequest request = writeRequestEventArgs.GetRequest();
 
-            if (request.Value.Length != CommandLength)
+            if (request.Value.Length < MinCommandLength)
             {
                 request.RespondWithProtocolError((byte)BluetoothError.NotSupported);
                 return;
             }
-
             DataReader rdr = DataReader.FromBuffer(request.Value);
-            string command = rdr.ReadString(CommandLength);
+            uint commandLength = rdr.ReadUInt32();
+            string command = rdr.ReadString(commandLength);
 
             // Respond if Write requires response
             if (request.Option == GattWriteOption.WriteWithResponse)

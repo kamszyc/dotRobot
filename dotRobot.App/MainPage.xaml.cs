@@ -25,7 +25,13 @@ namespace dotRobot
             {
                 await DisplayAlertAsync("Information", alert, "OK");
             };
+            Joystick.PositionChanged += Joystick_PositionChanged;
             this.gamepadService = gamepadService;
+        }
+
+        private void Joystick_PositionChanged(object? sender, Point e)
+        {
+            ViewModel.JoystickPositionChangedCommand.Execute(e);
         }
 
         protected override void OnAppearing()
