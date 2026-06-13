@@ -82,18 +82,20 @@ namespace dotRobot.Motor
 
         public void SetJoystickPosition(int x, int y)
         {
-            double xPercent = (double)x / SpeedLevels.Max;
-            double yPercent = (double)y / SpeedLevels.Max;
+            //Reverse steering when going backwards
+            if (y < 0)
+                x = -x;
 
-            var leftMotorSpeed = yPercent * maxMotorSpeed;
-            if (xPercent < 0)
-                leftMotorSpeed *= (-xPercent);
+            var left = y + x;
+            var right = y - x;
 
-            var rightMotorSpeed = yPercent * maxMotorSpeed;
-            if (xPercent > 0)
-                rightMotorSpeed *= xPercent;
-            leftMotor.Speed = leftMotorSpeed;
-            rightMotor.Speed = rightMotorSpeed;
+            var div = Math.Max(SpeedLevels.Max, Math.Max(Math.Abs(left), Math.Abs(right)));
+
+            var leftPercent = (double)left / div;
+            var rightPercent = (double)right / div;
+
+            leftMotor.Speed = leftPercent * maxMotorSpeed;
+            rightMotor.Speed = rightPercent * maxMotorSpeed;
         }
     }
 }
