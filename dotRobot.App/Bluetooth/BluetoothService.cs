@@ -16,6 +16,7 @@ namespace dotRobot.Bluetooth
     {
         private BluetoothDevice? btDevice;
         private GattCharacteristic? characteristic;
+        private string lastCommand = string.Empty;
         private SemaphoreSlim semaphoreSlim = new SemaphoreSlim(1, 1);
 
         public bool IsConnected => btDevice?.Gatt.IsConnected ?? false;
@@ -79,6 +80,12 @@ namespace dotRobot.Bluetooth
                     Debug.WriteLine("Characteristic is null. Cannot send command.");
                     return;
                 }
+
+                if (command == lastCommand)
+                {
+                    return;
+                }
+                lastCommand = command;
 
                 await characteristic.WriteValueWithResponseAsync([..BitConverter.GetBytes((uint)command.Length), ..Encoding.UTF8.GetBytes(command)]);
 

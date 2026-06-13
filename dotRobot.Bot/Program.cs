@@ -37,8 +37,6 @@ namespace dotRobot
 
         private static void RobotControlCommandReceived(RobotControlBluetoothService sender, RobotControlCommandEventArgs eventArgs)
         {
-            Debug.WriteLine(eventArgs.Command);
-
             switch (eventArgs.Command)
             {
                 case Commands.TurnRight:
