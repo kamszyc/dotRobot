@@ -9,14 +9,14 @@
             Grid.Column="0" 
             Grid.RowSpan="5" 
             Grid.ColumnSpan="5"
-            Fill="LightGray" />
+            Fill="{StaticResource Gray200}" />
         <Ellipse
             x:Name="Thumb"
             Grid.Row="1"
             Grid.Column="1"
             Grid.RowSpan="3" 
             Grid.ColumnSpan="3"
-            Fill="DarkSlateBlue"
+            Fill="{StaticResource Primary}"
             TranslationX="0" 
             TranslationY="0" />
     </Grid>
