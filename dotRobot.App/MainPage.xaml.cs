@@ -39,6 +39,12 @@ namespace dotRobot
             base.OnAppearing();
             gamepadService.Start(Dispatcher);
             gamepadService.ButtonStateChanged += GamepadService_ButtonStateChanged;
+            gamepadService.LeftJoystickMoved += GamepadService_LeftJoystickMoved;
+        }
+
+        private void GamepadService_LeftJoystickMoved(object? sender, GamepadJoystickEventArgs e)
+        {
+            ViewModel.JoystickPositionChangedCommand.Execute(new Point(e.X, e.Y));
         }
 
         private void GamepadService_ButtonStateChanged(object? sender, GamepadButtonEventArgs e)
