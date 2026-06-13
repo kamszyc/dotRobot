@@ -54,7 +54,7 @@
                 Grid.Column="2"
                 IsVisible="{Binding IsConnected}" 
                 Margin="20"
-                Text="ARROWS"
+                Text="⚙️"
                 FontSize="30"
                 HorizontalOptions="FillAndExpand"
                 VerticalOptions="FillAndExpand">
