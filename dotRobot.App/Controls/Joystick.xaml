@@ -9,14 +9,14 @@
             Grid.Column="0" 
             Grid.RowSpan="5" 
             Grid.ColumnSpan="5"
-            Fill="{StaticResource Gray200}" />
+            Fill="{DynamicResource Secondary}" />
         <Ellipse
             x:Name="Thumb"
             Grid.Row="1"
             Grid.Column="1"
             Grid.RowSpan="3" 
             Grid.ColumnSpan="3"
-            Fill="{StaticResource Primary}"
+            Fill="{DynamicResource Primary}"
             TranslationX="0" 
             TranslationY="0" />
     </Grid>
