@@ -20,13 +20,37 @@ namespace dotRobot.Bluetooth
             BluetoothLEServer server = BluetoothLEServer.Instance;
             server.DeviceName = Constants.BluetoothDeviceName;
 
-            GattServiceProviderResult result = GattServiceProvider.Create(Constants.ServiceGuid);
-            if (result.Error != BluetoothError.Success)
+            bool success = CreateRobotControlCharacteristic(out GattServiceProvider robotControlServiceProvider, out GattLocalCharacteristic robotControlCharacteristic);
+            if (!success)
             {
                 return;
             }
 
-            GattServiceProvider serviceProvider = result.ServiceProvider;
+            success = CreateBatteryLevelCharacteristic(out GattServiceProvider batteryServiceProvider, out GattLocalCharacteristic batteryLevelCharacteristic);
+            if (!success)
+            {
+                return;
+            }
+
+            robotControlCharacteristic.WriteRequested += RobotControlCharacteristic_WriteRequested;
+            batteryLevelCharacteristic.ReadRequested += BatteryLevelCharacteristic_ReadRequested;
+
+            robotControlServiceProvider.StartAdvertising();
+            batteryServiceProvider.StartAdvertising();
+        }
+
+        private static bool CreateRobotControlCharacteristic(out GattServiceProvider serviceProvider, out GattLocalCharacteristic robotControlCharacteristic)
+        {
+            serviceProvider = null;
+            robotControlCharacteristic = null;
+
+            GattServiceProviderResult result = GattServiceProvider.Create(Constants.RobotControlServiceGuid);
+            if (result.Error != BluetoothError.Success)
+            {
+                return false;
+            }
+
+            serviceProvider = result.ServiceProvider;
             GattLocalService service = serviceProvider.Service;
 
             var characteristicResult = service.CreateCharacteristic(Constants.RobotControlCharactericticGuid,
@@ -38,13 +62,41 @@ namespace dotRobot.Bluetooth
 
             if (characteristicResult.Error != BluetoothError.Success)
             {
-                return;
+                return false;
             }
 
-            var robotControlCharacteristic = characteristicResult.Characteristic;
-            robotControlCharacteristic.WriteRequested += RobotControlCharacteristic_WriteRequested;
+            robotControlCharacteristic = characteristicResult.Characteristic;
+            return true;
+        }
 
-            serviceProvider.StartAdvertising();
+        private static bool CreateBatteryLevelCharacteristic(out GattServiceProvider serviceProvider, out GattLocalCharacteristic batteryLevelCharacteristic)
+        {
+            serviceProvider = null;
+            batteryLevelCharacteristic = null;
+
+            GattServiceProviderResult result = GattServiceProvider.Create(GattServiceUuids.Battery);
+            if (result.Error != BluetoothError.Success)
+            {
+                return false;
+            }
+
+            serviceProvider = result.ServiceProvider;
+            GattLocalService service = serviceProvider.Service;
+
+            var characteristicResult = service.CreateCharacteristic(GattCharacteristicUuids.BatteryLevel,
+                new GattLocalCharacteristicParameters()
+                {
+                    CharacteristicProperties = GattCharacteristicProperties.Read | GattCharacteristicProperties.Notify,
+                    UserDescription = "Battery level",
+                });
+
+            if (characteristicResult.Error != BluetoothError.Success)
+            {
+                return false;
+            }
+
+            batteryLevelCharacteristic = characteristicResult.Characteristic;
+            return true;
         }
 
         private void RobotControlCharacteristic_WriteRequested(GattLocalCharacteristic sender, GattWriteRequestedEventArgs writeRequestEventArgs)
@@ -69,6 +121,12 @@ namespace dotRobot.Bluetooth
             Debug.WriteLine($"Received command={command}");
 
             CommandReceived?.Invoke(this, new RobotControlCommandEventArgs(command));
+        }
+
+        private void BatteryLevelCharacteristic_ReadRequested(GattLocalCharacteristic sender, GattReadRequestedEventArgs readRequestEventArgs)
+        {
+            GattReadRequest request = readRequestEventArgs.GetRequest();
+            request.RespondWithValue(new Buffer(new byte[] { 42 }));
         }
     }
 }

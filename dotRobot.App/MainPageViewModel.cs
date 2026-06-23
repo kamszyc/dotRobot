@@ -20,6 +20,7 @@ namespace dotRobot
         private bool isConnecting;
         private bool canConnect;
         private int currentSpeedLevel;
+        private int batteryLevel;
         private bool enableArrows;
 
         public event EventHandler<string>? RequestAlert;
@@ -65,6 +66,12 @@ namespace dotRobot
             set => SetProperty(ref currentSpeedLevel, value);
         }
 
+        public int BatteryLevel
+        {
+            get => batteryLevel;
+            set => SetProperty(ref batteryLevel, value);
+        }
+
         public MainPageViewModel(BluetoothService bluetoothService)
         {
             IsConnected = false;
@@ -102,6 +109,21 @@ namespace dotRobot
                 RequestAlert?.Invoke(this, ex.Message);
                 IsConnecting = false;
                 CanConnect = true;
+            }
+        }
+
+        public async Task TimerTick()
+        {
+            try
+            {
+                if (!IsConnected)
+                    return;
+
+                BatteryLevel = await bluetoothService.ReadBatteryLevel();
+            }
+            catch (Exception)
+            {
+                // ignore read errors, e.g. when disconnected
             }
         }
 
