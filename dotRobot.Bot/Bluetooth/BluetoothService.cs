@@ -1,4 +1,5 @@
-﻿using dotRobot.Common;
+﻿using dotRobot.Adc;
+using dotRobot.Common;
 using nanoFramework.Device.Bluetooth;
 using nanoFramework.Device.Bluetooth.GenericAttributeProfile;
 using System;
@@ -14,6 +15,13 @@ namespace dotRobot.Bluetooth
 
         public delegate void CommandReceivedEventHandler(BluetoothService sender, RobotControlCommandEventArgs robotControlCommandEventArgs);
         public CommandReceivedEventHandler CommandReceived;
+
+        private BatteryAdcController batteryAdcController;
+
+        public BluetoothService(BatteryAdcController batteryAdcController)
+        {
+            this.batteryAdcController = batteryAdcController;
+        }
 
         public void Advertise()
         {
@@ -126,7 +134,8 @@ namespace dotRobot.Bluetooth
         private void BatteryLevelCharacteristic_ReadRequested(GattLocalCharacteristic sender, GattReadRequestedEventArgs readRequestEventArgs)
         {
             GattReadRequest request = readRequestEventArgs.GetRequest();
-            request.RespondWithValue(new Buffer(new byte[] { 42 }));
+            int readBatteryLevel = batteryAdcController.ReadBatteryLevel();
+            request.RespondWithValue(new Buffer(new byte[] { (byte)readBatteryLevel }));
         }
     }
 }

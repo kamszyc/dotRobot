@@ -1,3 +1,4 @@
+using dotRobot.Adc;
 using dotRobot.Bluetooth;
 using dotRobot.Common;
 using dotRobot.Lights;
@@ -21,7 +22,10 @@ namespace dotRobot
 
         public static void Main()
         {
-            bluetoothService = new BluetoothService();
+            BatteryAdcController batteryAdcController = new BatteryAdcController();
+            batteryAdcController.Initialize();
+
+            bluetoothService = new BluetoothService(batteryAdcController);
             bluetoothService.Advertise();
             bluetoothService.CommandReceived += RobotControlCommandReceived;
 
