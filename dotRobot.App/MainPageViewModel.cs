@@ -20,7 +20,7 @@ namespace dotRobot
         private bool isConnecting;
         private bool canConnect;
         private int currentSpeedLevel;
-        private int batteryLevel;
+        private int? batteryLevel;
         private bool enableArrows;
 
         public event EventHandler<string>? RequestAlert;
@@ -66,11 +66,17 @@ namespace dotRobot
             set => SetProperty(ref currentSpeedLevel, value);
         }
 
-        public int BatteryLevel
+        public int? BatteryLevel
         {
             get => batteryLevel;
-            set => SetProperty(ref batteryLevel, value);
+            set
+            {
+                SetProperty(ref batteryLevel, value);
+                OnPropertyChanged(nameof(BatteryLevelText));
+            }
         }
+
+        public string BatteryLevelText => BatteryLevel.HasValue ? $"🔋 {BatteryLevel.Value}%" : "🔋 ??%";
 
         public MainPageViewModel(BluetoothService bluetoothService)
         {
@@ -93,6 +99,7 @@ namespace dotRobot
 
                 IsConnecting = true;
                 CanConnect = false;
+                BatteryLevel = null;
 
                 await bluetoothService.Connect();
 
