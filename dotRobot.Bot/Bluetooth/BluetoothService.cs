@@ -8,11 +8,11 @@ using System.Threading;
 
 namespace dotRobot.Bluetooth
 {
-    public class RobotControlBluetoothService
+    public class BluetoothService
     {
         public const int MinCommandLength = 4;
 
-        public delegate void CommandReceivedEventHandler(RobotControlBluetoothService sender, RobotControlCommandEventArgs robotControlCommandEventArgs);
+        public delegate void CommandReceivedEventHandler(BluetoothService sender, RobotControlCommandEventArgs robotControlCommandEventArgs);
         public CommandReceivedEventHandler CommandReceived;
 
         public void Advertise()

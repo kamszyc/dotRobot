@@ -22,7 +22,7 @@
   </PropertyGroup>
   <Import Project="$(NanoFrameworkProjectSystemPath)NFProjectSystem.props" Condition="Exists('$(NanoFrameworkProjectSystemPath)NFProjectSystem.props')" />
   <ItemGroup>
-    <Compile Include="Bluetooth\RobotControlBluetoothService.cs" />
+    <Compile Include="Bluetooth\BluetoothService.cs" />
     <Compile Include="Bluetooth\RobotControlCommandEventArgs.cs" />
     <Compile Include="Lights\LightsController.cs" />
     <Compile Include="Motor\MotorController.cs" />

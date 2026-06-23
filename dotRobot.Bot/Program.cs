@@ -15,15 +15,15 @@ namespace dotRobot
 {
     public class Program
     {
-        private static RobotControlBluetoothService robotControlBluetoothService;
+        private static BluetoothService bluetoothService;
         private static MotorController motorController;
         private static LightsController lightsController;
 
         public static void Main()
         {
-            robotControlBluetoothService = new RobotControlBluetoothService();
-            robotControlBluetoothService.Advertise();
-            robotControlBluetoothService.CommandReceived += RobotControlCommandReceived;
+            bluetoothService = new BluetoothService();
+            bluetoothService.Advertise();
+            bluetoothService.CommandReceived += RobotControlCommandReceived;
 
             motorController = new MotorController();
             lightsController = new LightsController();
@@ -35,7 +35,7 @@ namespace dotRobot
             }
         }
 
-        private static void RobotControlCommandReceived(RobotControlBluetoothService sender, RobotControlCommandEventArgs eventArgs)
+        private static void RobotControlCommandReceived(BluetoothService sender, RobotControlCommandEventArgs eventArgs)
         {
             switch (eventArgs.Command)
             {
