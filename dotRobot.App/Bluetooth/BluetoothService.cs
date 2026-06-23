@@ -112,13 +112,22 @@ namespace dotRobot.Bluetooth
 
         public async Task<byte> ReadBatteryLevel()
         {
-            if (batteryLevelCharacteristic == null)
+            try
             {
-                throw new InvalidOperationException("Battery level characteristic is not initialized.");
-            }
+                await semaphoreSlim.WaitAsync();
 
-            var batteryLevelData = await batteryLevelCharacteristic.ReadValueAsync();
-            return batteryLevelData?[0] ?? 0;
+                if (batteryLevelCharacteristic == null)
+                {
+                    throw new InvalidOperationException("Battery level characteristic is not initialized.");
+                }
+
+                var batteryLevelData = await batteryLevelCharacteristic.ReadValueAsync();
+                return batteryLevelData?[0] ?? 0;
+            }
+            finally
+            {
+                semaphoreSlim.Release();
+            }
         }
 
         private async Task<BluetoothDevice?> ScanForDevice()
