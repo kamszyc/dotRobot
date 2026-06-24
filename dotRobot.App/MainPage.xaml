@@ -41,7 +41,7 @@
 
         <Grid RowDefinitions="{OnPlatform Android='*,*,*,*,*,*', WinUI='*,*,*,*,*'}" ColumnDefinitions="*,*,*" IsVisible="{Binding IsConnected}">
             <Label
-                Text="Connected"
+                Text="{Binding Path=BatteryLevelText}"
                 Grid.Row="0"
                 Grid.Column="1"
                 IsVisible="{Binding IsConnected}" 

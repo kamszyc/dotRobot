@@ -15,7 +15,8 @@ namespace dotRobot.Bluetooth
     public class BluetoothService
     {
         private BluetoothDevice? btDevice;
-        private GattCharacteristic? characteristic;
+        private GattCharacteristic? robotControlCharacteristic;
+        private GattCharacteristic? batteryLevelCharacteristic;
         private string lastCommand = string.Empty;
         private SemaphoreSlim semaphoreSlim = new SemaphoreSlim(1, 1);
 
@@ -56,16 +57,28 @@ namespace dotRobot.Bluetooth
 
             btDevice.GattServerDisconnected += OnGattServerDisconnected;
 
-            var service = await btDevice.Gatt.GetPrimaryServiceAsync(Constants.ServiceGuid);
-            if (service == null)
+            var robotControlService = await btDevice.Gatt.GetPrimaryServiceAsync(Constants.RobotControlServiceGuid);
+            if (robotControlService == null)
             {
                 throw new InvalidOperationException("Service not found.");
             }
 
-            characteristic = await service.GetCharacteristicAsync(Constants.RobotControlCharactericticGuid);
-            if (characteristic == null)
+            robotControlCharacteristic = await robotControlService.GetCharacteristicAsync(Constants.RobotControlCharactericticGuid);
+            if (robotControlCharacteristic == null)
             {
                 throw new InvalidOperationException("Characteristic not found.");
+            }
+
+            var batteryService = await btDevice.Gatt.GetPrimaryServiceAsync(GattServiceUuids.Battery);
+            if (batteryService == null)
+            {
+                throw new InvalidOperationException("Battery service not found.");
+            }
+
+            batteryLevelCharacteristic = await batteryService.GetCharacteristicAsync(GattCharacteristicUuids.BatteryLevel);
+            if (batteryLevelCharacteristic == null)
+            {
+                throw new InvalidOperationException("Battery level characteristic not found.");
             }
         }
 
@@ -75,7 +88,7 @@ namespace dotRobot.Bluetooth
             {
                 await semaphoreSlim.WaitAsync();
 
-                if (characteristic == null)
+                if (robotControlCharacteristic == null)
                 {
                     Debug.WriteLine("Characteristic is null. Cannot send command.");
                     return;
@@ -87,14 +100,34 @@ namespace dotRobot.Bluetooth
                 }
                 lastCommand = command;
 
-                await characteristic.WriteValueWithResponseAsync([..BitConverter.GetBytes((uint)command.Length), ..Encoding.UTF8.GetBytes(command)]);
+                await robotControlCharacteristic.WriteValueWithResponseAsync([.. BitConverter.GetBytes((uint)command.Length), .. Encoding.UTF8.GetBytes(command)]);
 
                 Debug.WriteLine($"Command sent: {command}");
             }
             finally
             {
                 semaphoreSlim.Release();
-            } 
+            }
+        }
+
+        public async Task<byte> ReadBatteryLevel()
+        {
+            try
+            {
+                await semaphoreSlim.WaitAsync();
+
+                if (batteryLevelCharacteristic == null)
+                {
+                    throw new InvalidOperationException("Battery level characteristic is not initialized.");
+                }
+
+                var batteryLevelData = await batteryLevelCharacteristic.ReadValueAsync();
+                return batteryLevelData?[0] ?? 0;
+            }
+            finally
+            {
+                semaphoreSlim.Release();
+            }
         }
 
         private async Task<BluetoothDevice?> ScanForDevice()
@@ -104,7 +137,7 @@ namespace dotRobot.Bluetooth
             {
                 Name = Constants.BluetoothDeviceName
             };
-            filter.Services.Add(Constants.ServiceGuid);
+            filter.Services.Add(Constants.RobotControlServiceGuid);
             options.Filters.Add(filter);
 
             var discoveredDevices = await InTheHand.Bluetooth.Bluetooth.ScanForDevicesAsync(options);
@@ -115,7 +148,7 @@ namespace dotRobot.Bluetooth
         {
             Disconnected?.Invoke(this, EventArgs.Empty);
             btDevice = null;
-            characteristic = null;
+            robotControlCharacteristic = null;
         }
     }
 }

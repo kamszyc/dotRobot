@@ -13,6 +13,7 @@ namespace dotRobot
     public partial class MainPage : ContentPage
     {
         private readonly GamepadService gamepadService;
+        private IDispatcherTimer? timer;
 
         private MainPageViewModel ViewModel => (MainPageViewModel)BindingContext;
 
@@ -40,6 +41,21 @@ namespace dotRobot
             gamepadService.Start(Dispatcher);
             gamepadService.ButtonStateChanged += GamepadService_ButtonStateChanged;
             gamepadService.LeftJoystickMoved += GamepadService_LeftJoystickMoved;
+
+            timer = Application.Current!.Dispatcher.CreateTimer();
+            timer.Interval = TimeSpan.FromSeconds(1);
+            timer.Tick += async (s, e) => await ViewModel.TimerTick();
+            timer.Start();
+        }
+
+        protected override void OnDisappearing()
+        {
+            base.OnDisappearing();
+            if (timer != null)
+            {
+                timer.Stop();
+                timer = null;
+            }
         }
 
         private void GamepadService_LeftJoystickMoved(object? sender, GamepadJoystickEventArgs e)
